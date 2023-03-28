@@ -17,7 +17,7 @@ class OfferController extends Controller
 
     public function index()
     {
-        $brand['data'] = Offer::orderby('id', 'desc')->paginate($this->perPage);
+        $brand['data'] = Offer::orderby('id', 'desc')->get();
         return view('admin/offer', $brand);
     }
 

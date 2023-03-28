@@ -17,7 +17,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $category['data'] = Category::orderby('id', 'desc')->paginate($this->perPage);
+        $category['data'] = Category::orderby('id', 'desc')->get();
         return view('admin/category', $category);
     }
 
