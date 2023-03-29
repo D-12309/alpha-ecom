@@ -1,6 +1,6 @@
 @extends('admin/layout')
-@section('page_title','Manage Category')
-@section('category_select','active')
+@section('page_title','Manage FAQ')
+@section('faq_select','active')
 @section('links')
 @endsection
 @section('container')
@@ -11,12 +11,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Mange Category</h1>
+                        <h1 class="m-0">Mange FAQ</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Categories</li>
+                            <li class="breadcrumb-item active">faqs</li>
                         </ol>
                     </div><!-- /.col -->
 
@@ -28,49 +28,37 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-6 offset-3">
+                    <div class="col-12">
 
 
                         <!-- /.card-header -->
                         <div class="card card-info">
                             <div class="card-header">
-                                <h3 class="card-title">Manage Category Detail</h3>
+                                <h3 class="card-title">Manage FAQ Detail</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form class="form-horizontal" method="post" action="{{route('category.manage_category_process')}}" enctype="multipart/form-data">
+                            <form class="form-horizontal" method="post" action="{{route('faq.manage_faq_process')}}">
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Category Name</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Question</label>
+
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="" name="name"
-                                                   value="{{$name ? $name : old('name')}}">
-                                            @error('name')
-                                            <span style="color: red">{{$message}}</span>
-                                            @enderror
+                                            <textarea type="text" id="legal_disclaimer" name="question"
+                                                      class="ckeditor form-control col-md-7 col-xs-12"
+                                            >{{$question}}</textarea>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Category Image</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Answer</label>
                                         <div class="col-sm-10">
-                                            <div class="custom-file">
-                                                <input type="file" name="image" class="custom-file-input" id="exampleInputFile">
-                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                            </div>
-                                            @if(env('APP_ENV') == 'production')
-                                                @if (Storage::disk('s3')->exists($image))
-                                                    <img src="{{Storage::disk('s3')->url($image)}}" width="100px">
-                                                @endif
-                                            @else
-                                                <img src="/{{$image}}" width="300px">
-                                            @endif
-                                            @error('image')
-                                            <span style="color: red">{{$message}}</span>
-                                            @enderror
+                                            <textarea type="text" id="legal_disclaimer" name="answer"
+                                                      class="ckeditor form-control col-md-7 col-xs-12"
+                                            >{{$answer}}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +68,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-info">Save Changes</button>
-                                    <a href="{{url('admin/categories')}}"class="btn btn-default float-right">Cancel</a>
+                                    <a href="{{url('admin/faqs')}}" class="btn btn-default float-right">Cancel</a>
                                 </div>
                                 <!-- /.card-footer -->
                             </form>
@@ -105,5 +93,11 @@
 
 @section('scripts')
     <!-- DataTables  & Plugins -->
+    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
     <script src="{{asset('admin_assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.ckeditor').ckeditor();
+        });
+    </script>
 @endsection

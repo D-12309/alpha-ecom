@@ -1,235 +1,189 @@
 @extends('admin/layout')
 @section('page_title','Manage Product')
 @section('product_select','active')
+@section('links')
+@endsection
 @section('container')
-    <!-- page content -->
-    <div class="right_col" role="main" style="min-height: 1197px;">
-        <div>
-            <div class="page-title">
-                <div class="title_left">
-                    <h3>Manage Product</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px">
-                    <div class="x_panel">
-                        <div class="x_content">
-                            <br>
-                            <form id="demo-form2" method="post" action="{{route('product.manage_product_process')}}"
-                                  data-parsley-validate="" class="form-horizontal form-label-left"
-                                  enctype="multipart/form-data">
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Mange Product</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Products</li>
+                        </ol>
+                    </div><!-- /.col -->
+
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 ">
+
+
+                        <!-- /.card-header -->
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Manage Product Detail</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form class="form-horizontal" method="post"
+                                  action="{{route('product.manage_product_process')}}" enctype="multipart/form-data">
                                 @csrf
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">Product Name<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="is_application_submitted" name="name"
-                                               class="form-control col-md-7 col-xs-12"
-                                               value="{{$name ? $name : old('name')}}" required>
-                                        @error('name')
-                                        <span style="color: red">{{$message}}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">Product Qty.<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="is_application_submitted" name="qty"
-                                               class="form-control col-md-7 col-xs-12"
-                                               value="{{$qty ? $qty : old('qty')}}" required>
-                                        @error('qty')
-                                        <span style="color: red">{{$message}}</span>
-                                        @enderror
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Product Name</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="" name="name"
+                                                   value="{{$name ? $name : old('name')}}">
+                                            @error('name')
+                                            <span style="color: red">{{$message}}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">Product SKU<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="is_application_submitted" name="sku"
-                                               class="form-control col-md-7 col-xs-12"
-                                               value="{{$sku ? $sku : old('sku')}}" required>
-                                        @error('sku')
-                                        <span style="color: red">{{$message}}</span>
-                                        @enderror
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Product Qty.</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="" name="qty"
+                                                   value="{{$qty ? $qty : old('qty')}}">
+                                            @error('qty')
+                                            <span style="color: red">{{$message}}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">MRP<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="is_application_submitted" name="mrp"
-                                               class="form-control col-md-7 col-xs-12"
-                                               value="{{$mrp ? $mrp : old('mrp')}}" required>
-                                        @error('mrp')
-                                        <span style="color: red">{{$message}}</span>
-                                        @enderror
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Product SKU</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="" name="sku"
+                                                   value="{{$sku ? $sku  : old('sku')}}">
+                                            @error('sku')
+                                            <span style="color: red">{{$message}}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">Price<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="is_application_submitted" name="price"
-                                               class="form-control col-md-7 col-xs-12"
-                                               value="{{$price ? $price : old('price')}}" required>
-                                        @error('price')
-                                        <span style="color: red">{{$message}}</span>
-                                        @enderror
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">MRP</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="" name="mrp"
+                                                   value="{{$mrp ? $mrp  : old('mrp')}}">
+                                            @error('mrp')
+                                            <span style="color: red">{{$message}}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">Brand<span
-                                            class="required">*</span>
-                                    </label>
-
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select type="text" id="is_application_submitted" name="brand_id"
-                                                class="form-control col-md-7 col-xs-12" required>
-                                            @foreach($brands as $Key=>$brand)
-                                                <option
-                                                    value="{{$Key}}" {{$Key==$brand_id ? "selected" : ''}}>{{$brand}}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Price</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="" name="price"
+                                                   value="{{$price ? $price  : old('price')}}">
+                                            @error('price')
+                                            <span style="color: red">{{$message}}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">Category<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select type="text" id="is_application_submitted" name="category_id"
-                                                class="form-control col-md-7 col-xs-12" required>
-                                            @foreach($categories as $Key=>$category)
-                                                <option
-                                                    value="{{$Key}}" {{$Key==$category_id  ? "selected" : ''}}>{{$category}}</option>
-                                            @endforeach
-
-                                        </select>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Brand</label>
+                                        <div class="col-sm-10">
+                                            <select type="text" id="is_application_submitted" name="brand_id"
+                                                    class="custom-select">
+                                                @foreach($brands as $Key=>$brand)
+                                                    <option
+                                                        value="{{$Key}}" {{$Key==$brand_id ? "selected" : ''}}>{{$brand}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">Key Highlight<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-9 col-sm-6 col-xs-12">
-                                        <textarea type="text" id="is_application_submitted" name="key_highlight"
-                                                  class="ckeditor form-control col-md-7 col-xs-12"
-                                        >{{$key_highlight}}</textarea>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Category</label>
+                                        <div class="col-sm-10">
+                                            <select type="text" id="is_application_submitted" name="category_id"
+                                                    class="custom-select">
+                                                @foreach($categories as $Key=>$category)
+                                                    <option
+                                                        value="{{$Key}}" {{$Key==$category_id  ? "selected" : ''}}>{{$category}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">Description<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-9 col-sm-6 col-xs-12">
-                                        <textarea type="text" id="is_application_submitted" name="description"
-                                                  class="ckeditor form-control col-md-7 col-xs-12" required
-                                        >{{$description}}</textarea>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Key Highligh</label>
+                                        <div class="col-sm-10">
+                                            <textarea type="text" id="is_application_submitted" name="key_highlight"
+                                                      class="ckeditor form-control col-md-7 col-xs-12"
+                                            >{{$key_highlight}}</textarea>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">Specification<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-9 col-sm-6 col-xs-12">
-                                        <textarea type="text" id="is_application_submitted" name="specification"
-                                                  class="ckeditor form-control col-md-7 col-xs-12"
-                                        >{{$specification}}</textarea>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
+                                        <div class="col-sm-10">
+                                            <textarea type="text" id="is_application_submitted" name="description"
+                                                      class="ckeditor form-control col-md-7 col-xs-12" required
+                                            >{{$description}}</textarea>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="legal_disclaimer">Legal Disclaimer<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-9 col-sm-6 col-xs-12">
-                                        <textarea type="text" id="legal_disclaimer" name="legal_disclaimer"
-                                                  class="ckeditor form-control col-md-7 col-xs-12"
-                                        >{{$legal_disclaimer}}</textarea>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Specification</label>
+                                        <div class="col-sm-10">
+                                            <textarea type="text" id="is_application_submitted" name="specification"
+                                                      class="ckeditor form-control col-md-7 col-xs-12"
+                                            >{{$specification}}</textarea>
+                                        </div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-12">
-                                     <div class="form-group">
-                                         <div class="row" id="product_images_box">
-                                             @php
-                                                 $loop_count_num=1;
-                                             @endphp
-                                             @foreach($productImagesArr as $key=>$val)
-                                                 @php
-                                                     $loop_count_prev=$loop_count_num;
-                                                 @endphp
-                                                 <input id="piid" type="hidden" name="piid[]"
-                                                        value="{{$val['id']}}">
-                                                 <div class="col-md-4 product_images_{{$loop_count_num++}}">
-                                                     <label for="images" class="control-label mb-1">
-                                                         Image</label>
-                                                     <input id="images" name="images[]" type="file"
-                                                            class="form-control" aria-required="true"
-                                                            aria-invalid="false">
-                                                     @error('images')
-                                                     <span style="color: red">{{$message}}</span>
-                                                     @enderror
-                                                     @if(env('APP_ENV') == 'production')
-                                                         @if($val['image']!='' && Storage::disk('s3')->exists($val['image']))
-                                                             <a href="/{{Storage::disk('s3')->url($val['image'])}}" target="_blank"><img
-                                                                     width="100px" src="{{Storage::disk('s3')->url($val['image'])}}"/></a>
-                                                         @endif
-                                                     @else
-                                                         @if($val['image']!='')
-                                                             <a href="/{{$val['image']}}" target="_blank"><img
-                                                                     width="100px" src="/{{$val['image']}}"/></a>
-                                                         @endif
-                                                     @endif
-                                                 </div>
 
-                                                 <div class="col-md-2">
-                                                     <label for="images" class="control-label mb-1">
-                                                         &nbsp;&nbsp;&nbsp;</label>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Legal Disclaimer</label>
+                                        <div class="col-sm-10">
+                                            <textarea type="text" id="legal_disclaimer" name="legal_disclaimer"
+                                                      class="ckeditor form-control col-md-7 col-xs-12"
+                                            >{{$legal_disclaimer}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                                     @if($loop_count_num==2)
-                                                         <button type="button" class="btn btn-success btn-lg"
-                                                                 onclick="add_image_more()">
-                                                             <i class="fa fa-plus"></i>&nbsp; Add
-                                                         </button>
-                                                     @else
-                                                         <a href="{{url('admin/products/product_images_delete/')}}/{{$val['id']}}/{{$id}}">
-                                                             <button type="button" class="btn btn-danger btn-lg">
-                                                                 <i class="fa fa-minus"></i>&nbsp; Remove
-                                                             </button>
-                                                         </a>
-                                                     @endif
-                                                 </div>
-                                             @endforeach
-                                         </div>
-                                     </div>
-                                 </div>--}}
+
+
                                 <div id="product_images_box">
+
                                     @php
                                         $loop_count_num=1;
                                     @endphp
@@ -237,33 +191,34 @@
                                         @php
                                             $loop_count_prev=$loop_count_num;
                                         @endphp
-                                        <div class="form-group">
+                                        <div class="card-body">
                                             <input id="piid" type="hidden" name="piid[]"
                                                    value="{{$val['id']}}">
-                                            <div class="product_images_{{$loop_count_num++}}">
-                                                <label for="images" class="control-label col-md-3 col-sm-3 col-xs-12">
-                                                    Image</label>
-                                                <div class="col-md-3 col-sm-6 col-xs-12">
-                                                    <input id="images" name="images[]" type="file"
-                                                           class="form-control" aria-required="true"
-                                                           aria-invalid="false">
+                                            <div class="form-group row product_images_{{$loop_count_num++}}">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Product Image</label>
+                                                <div class="col-sm-8">
+                                                    <div class="custom-file">
+                                                        <input type="file" name="images[]" class="custom-file-input" id="exampleInputFile">
+                                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                    </div>
+                                                    @if(env('APP_ENV') == 'production')
+                                                        @if($val['image']!='' && Storage::disk('s3')->exists($val['image']))
+                                                            <a href="/{{Storage::disk('s3')->url($val['image'])}}"
+                                                               target="_blank"><img
+                                                                    width="100px"
+                                                                    src="{{Storage::disk('s3')->url($val['image'])}}"/></a>
+                                                        @endif
+                                                    @else
+                                                        @if($val['image']!='')
+                                                            <a href="/{{$val['image']}}" target="_blank"><img
+                                                                    width="100px" src="/{{$val['image']}}"
+                                                                    style="border: 10px solid black; border-radius: 50%; "/></a>
+                                                        @endif
+                                                    @endif
+                                                    @error('images')
+                                                    <span style="color: red">{{$message}}</span>
+                                                    @enderror
                                                 </div>
-                                                @error('images')
-                                                <span style="color: red">{{$message}}</span>
-                                                @enderror
-                                                @if(env('APP_ENV') == 'production')
-                                                    @if($val['image']!='' && Storage::disk('s3')->exists($val['image']))
-                                                        <a href="/{{Storage::disk('s3')->url($val['image'])}}"
-                                                           target="_blank"><img
-                                                                width="100px"
-                                                                src="{{Storage::disk('s3')->url($val['image'])}}"/></a>
-                                                    @endif
-                                                @else
-                                                    @if($val['image']!='')
-                                                        <a href="/{{$val['image']}}" target="_blank"><img
-                                                                width="100px" src="/{{$val['image']}}"/></a>
-                                                    @endif
-                                                @endif
                                                 <div class="col-md-2">
                                                     <label for="images" class="control-label mb-1">
                                                         &nbsp;&nbsp;&nbsp;</label>
@@ -275,64 +230,80 @@
                                                         </button>
                                                     @else
                                                         <a href="{{url('admin/products/product_images_delete/')}}/{{$val['id']}}/{{$id}}">
-                                                            <button type="button" class="btn btn-danger btn-lg">
+                                                            <button type="button"
+                                                                    class="btn btn-danger btn-lg">
                                                                 <i class="fa fa-minus"></i>&nbsp; Remove
                                                             </button>
                                                         </a>
                                                     @endif
                                                 </div>
                                             </div>
-                                            @endforeach
                                         </div>
+                                    @endforeach
                                 </div>
 
 
-                                {{--<div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                           for="Application Submitted">Product Image<span
-                                            class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="file" id="is_application_submitted" name="image"
-                                               class="form-control col-md-7 col-xs-12">
-                                        @if(env('APP_ENV') == 'production')
-                                            @if (Storage::disk('s3')->exists($image))
-                                                <img src="{{Storage::disk('s3')->url($image)}}" width="100px">
-                                            @endif
-                                        @else
-                                            <img src="/{{$image }}" width="100px">
-                                        @endif
-                                        @error('image')
-                                        <span style="color: red">{{$message}}</span>
-                                        @enderror
-                                    </div>
-                                </div>--}}
 
                                 <input type="hidden" name="id" value="{{$id}}"/>
-                                <div class="form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <a class="btn btn-primary" href="{{url('admin/products')}}">Cancel</a>
-                                        <button type="submit" class="btn btn-success">Save Change</button>
-                                    </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-info">Save Changes</button>
+                                    <a href="{{url('admin/brands')}}" class="btn btn-default float-right">Cancel</a>
                                 </div>
+                                <!-- /.card-footer -->
                             </form>
                         </div>
+                        <!-- /.card-body -->
+
+                        <!-- /.card -->
                     </div>
+                    <!-- /.col -->
                 </div>
+                <!-- /.row -->
             </div>
-        </div>
+            <!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <!-- /.content -->
     </div>
+    <!-- page content -->
+
+    <!-- /page content -->
+@endsection
+
+@section('scripts')
+    <!-- DataTables  & Plugins -->
+    <script src="{{asset('admin_assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
     <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
     <script>
+
         var loop_count = 1;
         var loop_image_count = 1;
 
-        function add_image_more() {
+        /*function add_image_more() {
             loop_image_count++;
             console.log(loop_image_count);
             var html = '<div class="form-group product_images_' + loop_image_count + '"><input id="piid" type="hidden" name="piid[]" value=""><div><label for="images" class="control-label col-md-3 col-sm-3 col-xs-12"> Image</label><div class="col-md-3 col-sm-6 col-xs-12"><input id="images" name="images[]" type="file" class="form-control" aria-required="true" aria-invalid="false" required></div></div>';
             //product_images_box
             html += '<div class="col-md-2 product_images_' + loop_image_count + '""><label for="attr_image" class="control-label mb-1"> &nbsp;&nbsp;&nbsp;</label><button type="button" class="btn btn-danger btn-lg" onclick=remove_image_more("' + loop_image_count + '")><i class="fa fa-minus"></i>&nbsp; Remove</button></div></div>';
+            jQuery('#product_images_box').append(html)
+        }*/
+
+        function add_image_more() {
+            loop_image_count++;
+            console.log(loop_image_count);
+            var html = '<div class="card-body"><div class="form-group row product_images_' + loop_image_count + '"><label for="inputEmail3" class="col-sm-2 col-form-label">Product Image</label> <div class="col-sm-8">\n' +
+                '                                                    <div class="custom-file">\n' +
+                '                                                        <input type="file" name="images[]" class="custom-file-input" id="exampleInputFile">\n' +
+                '                                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>\n' +
+                '                                                    </div></div>';
+            //product_images_box
+            html += ' <div class="col-md-2 product_images_' + loop_image_count + '">\n' +
+                '                                                    <label for="images" class="control-label mb-1">\n' +
+                '                                                        &nbsp;&nbsp;&nbsp;</label><button  onclick=remove_image_more("' + loop_image_count + '") type="button"\n' +
+                '                                                                    class="btn btn-danger btn-lg">\n' +
+                '                                                                <i class="fa fa-minus"></i>&nbsp; \n' +
+                '                                                            </button></div></div>';
             jQuery('#product_images_box').append(html)
         }
 
@@ -343,7 +314,5 @@
         $(document).ready(function () {
             $('.ckeditor').ckeditor();
         });
-
     </script>
-    <!-- /page content -->
 @endsection

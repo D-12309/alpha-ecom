@@ -18,7 +18,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $Products['data'] = Product::with('productImages')->orderby('id', 'desc')->paginate($this->perPage);
+        $Products['data'] = Product::with('productImages')->orderby('id', 'desc')->get();
         return view('admin/product', $Products);
     }
 
@@ -81,7 +81,6 @@ class ProductController extends Controller
         $destinationPath = 'products';
 
         if ($request->post('id') > 0) {
-
             $product = Product::find($request->post('id'));
             $product->name = $request->post('name');
             $product->sku = $request->post('sku');

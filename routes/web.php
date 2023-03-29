@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\FAQController;
+use App\Http\Controllers\Admin\TermConditionController;
+use App\Http\Controllers\Admin\PrivacyPolicyController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -61,6 +64,24 @@ Route::group( ['middleware' => ['admin_auth'],'prefix' => 'admin'], function () 
         Route::get('/manage_product/{id}', [ProductController::class, 'manage_product']);
         Route::get('/delete/{id}', [ProductController::class, 'delete']);
         Route::get('/product_images_delete/{paid}/{pid}',[ProductController::class,'product_images_delete']);
+    });
+
+    Route::group( ['prefix' => 'faqs'], function () {
+        Route::get('/', [FAQController::class, 'index']);
+        Route::get('/manage_faq', [FAQController::class, 'manage_faq']);
+        Route::post('/manage_faq_process', [FAQController::class, 'manage_faq_process'])->name('faq.manage_faq_process');
+        Route::get('/manage_faq/{id}', [FAQController::class, 'manage_faq']);
+        Route::get('/delete/{id}', [FAQController::class, 'delete']);
+    });
+
+    Route::group( ['prefix' => 'privacy-policy'], function () {
+        Route::get('/', [PrivacyPolicyController::class, 'manage_privacy_policy']);
+        Route::post('/manage_privacy_policy_process', [PrivacyPolicyController::class, 'manage_privacy_policy_process'])->name('privacyPolicy.manage_privacy_policy_process');
+    });
+
+    Route::group( ['prefix' => 'terms-and-condition'], function () {
+        Route::get('/', [TermConditionController::class, 'manage_term_condition']);
+        Route::post('/manage_term_condition_process', [TermConditionController::class, 'manage_term_condition_process'])->name('termCondition.manage_term_condition_process');
     });
 
     Route::get('/logout', function () {

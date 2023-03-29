@@ -1,53 +1,78 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alpha Ecommerce | Log in</title>
 
-    <title> Login Page</title>
-
-    <!-- Bootstrap -->
-    <link href="{{asset('admin_assets/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link href="{{asset('admin_assets/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="{{asset('admin_assets/vendors/nprogress/nprogress.css')}}" rel="stylesheet">
-    <!-- Animate.css -->
-    <link href="{{asset('admin_assets/vendors/animate.css/animate.min.css')}}'" rel="stylesheet">
-
-    <!-- Custom Theme Style -->
-    <link href="{{asset('admin_assets/build/css/custom.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('admin_assets/plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{{asset('admin_assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{asset('admin_assets/dist/css/adminlte.min.css')}}">
 </head>
-
-<body class="login">
-<div>
-    <div class="login_wrapper">
-        <div class="animate form login_form">
-            <section class="login_content">
-                <form action="{{route('admin.auth')}}" method="post">
-                    @csrf
-                    <h1>Login Form</h1>
-                    <div>
-                        <input type="text" class="form-control" name="email" placeholder="Username"/>
-                    </div>
-                    <div>
-                        <input type="password" class="form-control" name="password" placeholder="Password"/>
-                    </div>
-                    @if(session()->has('error'))
-                        <span style="color: red">{{session('error')}}</span>
-                    @endif
-
-                    <div>
-                        <button class="btn btn-default" type="submit">Log in</button>
-                    </div>
-                </form>
-
-            </section>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <!-- /.login-logo -->
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="#" class="h1"><b>Alpha</b>Ecommerce</a>
         </div>
+        <div class="card-body">
+            <p class="login-box-msg">Sign in to Admin Portal</p>
+
+            <form action="{{route('admin.auth')}}" method="post">
+                @csrf
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control" name="email" placeholder="Email">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Password" name="password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        @if(session()->has('error'))
+                            <span style="color: red">{{session('error')}}</span>
+                        @endif
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+            <!-- /.social-auth-links -->
+
+        </div>
+        <!-- /.card-body -->
     </div>
+    <!-- /.card -->
 </div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="{{asset('admin_assets/plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{asset('admin_assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{asset('admin_assets/dist/js/adminlte.min.js')}}"></script>
 </body>
 </html>
