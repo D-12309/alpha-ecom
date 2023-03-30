@@ -64,6 +64,10 @@ Route::group( ['middleware' => ['admin_auth'],'prefix' => 'admin'], function () 
         Route::get('/manage_product/{id}', [ProductController::class, 'manage_product']);
         Route::get('/delete/{id}', [ProductController::class, 'delete']);
         Route::get('/product_images_delete/{paid}/{pid}',[ProductController::class,'product_images_delete']);
+        Route::post('projects/media1', [ProductController::class, 'storeMedia'])->name('projects.storeMedia');
+        Route::post('projects/media2', [ProductController::class, 'store'])->name('projects.store');
+
+
     });
 
     Route::group( ['prefix' => 'faqs'], function () {

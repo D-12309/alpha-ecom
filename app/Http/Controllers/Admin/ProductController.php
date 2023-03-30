@@ -69,13 +69,14 @@ class ProductController extends Controller
 
     public function manage_product_process(Request $request)
     {
-        $request->validate([
+
+        /*$request->validate([
             'sku' => 'required|unique:products,sku,' . $request->post('id'),
             'price' => 'required|numeric',
             'mrp' => 'required|numeric',
             'qty' => 'required|numeric',
-            'images.*' =>'mimes:jpg,jpeg,png'
-        ]);
+            //'images.*' =>'mimes:jpg,jpeg,png'
+        ]);*/
         $productImage = null;
 
         $destinationPath = 'products';
@@ -134,7 +135,21 @@ class ProductController extends Controller
                 }
             }
 
+
+
         } else {
+            foreach ($request->input('document', []) as $file) {
+
+                if(env('APP_ENV') == 'production') {
+                    $productImagefile = Helpers::storeFileInS3($file, $destinationPath);
+                }else{
+                    if (file_exists(storage_path('tmp/uploads/'.$file))) {
+                            unlink(storage_path('tmp/uploads/'.$file));
+
+                    }
+                }
+            }
+            dd('done');
             $product = new Product();
             $product->name = $request->post('name');
             $product->sku = $request->post('sku');
@@ -165,6 +180,8 @@ class ProductController extends Controller
                 }
             }
 
+
+
         }
         return redirect('admin/products');
     }
@@ -188,5 +205,37 @@ class ProductController extends Controller
         }
         ProductImage::where(['id'=>$paid])->delete();
         return redirect('admin/products/manage_product/'.$pid);
+    }
+
+    public function storeMedia(Request $request)
+    {
+        $path = storage_path('tmp/uploads');
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        $file = $request->file('file');
+
+        $name = uniqid() . '_' . trim($file->getClientOriginalName());
+
+        $file->move($path, $name);
+
+        return response()->json([
+            'name'          => $name,
+            'original_name' => $file,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+
+
+
+        foreach ($request->input('document', []) as $file) {
+            storage_path('tmp/uploads/' . $file);
+        }
+
+        return redirect()->route('projects.index');
     }
 }
