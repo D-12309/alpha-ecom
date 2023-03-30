@@ -1,6 +1,6 @@
 @extends('admin/layout')
-@section('page_title','Product Page')
-@section('product_select','active')
+@section('page_title','User Category Page')
+@section('user_category_select','active')
 @section('links')
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
@@ -17,12 +17,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Products</h1>
+                        <h1 class="m-0">User Categories</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Products</li>
+                            <li class="breadcrumb-item active">User Categories</li>
                         </ol>
                     </div><!-- /.col -->
 
@@ -40,10 +40,10 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-9">
-                                        <h3 class="card-title">Product Details</h3>
+                                        <h3 class="card-title">User Categories Details</h3>
                                     </div>
                                     <div class="col-3">
-                                        <a href="{{url('admin/products/manage_product')}}" class="btn btn-block btn-outline-primary btn-lg float-left">Add Product +</a>
+                                        <a href="{{url('admin/user-categories/user_manage_category')}}" class="btn btn-block btn-outline-primary btn-lg float-left">Add User Category +</a>
                                     </div>
                                 </div>
 
@@ -56,35 +56,22 @@
                                     <thead>
                                     <tr>
                                         <th class="">#</th>
-                                        <th class="">Product Name</th>
-                                        <th class="">Image</th>
-                                        <th class="">MRP</th>
-                                        <th class="">Price</th>
+                                        <th class="">User Category Name</th>
                                         <th class="">Created At</th>
                                         <th class="">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($data as $list)
-                                        <tr class="even pointer">
+                                        <tr class="">
                                             <td class=" ">{{$list->id}}</td>
                                             <td class=" ">{{$list->name}}</td>
-                                            @if(env('APP_ENV') == 'production')
-                                                @if (Storage::disk('s3')->exists($list['productImages'][0]['image']))
-                                                    <td> <img src="{{Storage::disk('s3')->url($list['productImages'][0]['image'])}}" width="100px"></td>
-                                                @endif
-                                            @else
-                                                <td> <img src="/{{$list['productImages'][0]['image']}}" width="100px"></td>
-                                            @endif
-                                            <td class=" ">{{$list->mrp}}</td>
-                                            <td class=" ">{{$list->price}}</td>
-
                                             <td class=" ">{{\Carbon\Carbon::parse($list->created_at)->format('l jS \of F Y h:i:s A')}}</td>
                                             <td class=" last"> <a
-                                                    href="{{url('admin/products/manage_product/')}}/{{$list->id}}"><i
+                                                    href="{{url('admin/user-categories/user_manage_category/')}}/{{$list->id}}"><i
                                                         class="fa fa-edit"></i> <span class="text-muted"></span></a>
                                                 <a onclick="return confirm('Are you sure want to delete this record?')"
-                                                   href="{{url('admin/products/delete/')}}/{{$list->id}}"><i
+                                                   href="{{url('admin/user-categories/delete/')}}/{{$list->id}}"><i
                                                         class="fa fa-trash"></i> <span class="text-muted"></span></a>
                                             </td>
                                         </tr>
@@ -93,10 +80,7 @@
                                     <tfoot>
                                     <tr>
                                         <th class="">#</th>
-                                        <th class="">Product Name</th>
-                                        <th class="">Image</th>
-                                        <th class="">MRP</th>
-                                        <th class="">Price</th>
+                                        <th class="">User Category Name</th>
                                         <th class="">Created At</th>
                                         <th class="">Action</th>
                                     </tr>

@@ -2,8 +2,7 @@
 @section('page_title','Manage Product')
 @section('product_select','active')
 @section('links')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet"/>
 @endsection
 @section('container')
 
@@ -59,12 +58,35 @@
                                 <div class="card-body">
                                     <div class="form-group row">
                                         <label for="inputEmail3" class="col-sm-2 col-form-label">Product Qty.</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="" name="qty"
-                                                   value="{{$qty ? $qty : old('qty')}}">
-                                            @error('qty')
-                                            <span style="color: red">{{$message}}</span>
-                                            @enderror
+                                        <div class="card-body">
+                                            @foreach($quantity as $key => $qty)
+                                                <div class="form-group row {{$key}}">
+                                                    @if ($id > 0)
+                                                        <label for="inputEmail3"
+                                                               class="col-sm-2 col-form-label">{{$qty->name}}</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id=""
+                                                                   name="qty[]"
+                                                                   value="{{$qty->qty ? $qty->qty : old('qty')}}">
+                                                            @error('qty')
+                                                            <span style="color: red">{{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    @else
+                                                        <label for="inputEmail3"
+                                                               class="col-sm-2 col-form-label">{{$qty['name']}}</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id=""
+                                                                   name="qty[]"
+                                                                   value="{{$qty['qty'] ? $qty['qty'] : old('qty')}}">
+                                                            @error('qty')
+                                                            <span style="color: red">{{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    @endif
+                                                </div>
+
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -84,26 +106,141 @@
 
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">MRP</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="" name="mrp"
-                                                   value="{{$mrp ? $mrp  : old('mrp')}}">
-                                            @error('mrp')
-                                            <span style="color: red">{{$message}}</span>
-                                            @enderror
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Product Mrp.</label>
+                                        <div class="card-body">
+                                            @foreach($mrps as $mrp)
+                                                <div class="form-group row">
+                                                    @if ($id > 0)
+                                                        <label for="inputEmail3"
+                                                               class="col-sm-2 col-form-label">{{$mrp->name}}</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id=""
+                                                                   name="mrp[]"
+                                                                   value="{{$mrp->mrp ? $mrp->mrp : old('mrp')}}">
+                                                            @error('mrp')
+                                                            <span style="color: red">{{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    @else
+                                                        <label for="inputEmail3"
+                                                               class="col-sm-2 col-form-label">{{$mrp['name']}}</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id=""
+                                                                   name="mrp[]"
+                                                                   value="{{$mrp['mrp'] ? $mrp['mrp'] : old('mrp')}}">
+                                                            @error('mrp')
+                                                            <span style="color: red">{{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    @endif
+                                                </div>
+
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Price</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="" name="price"
-                                                   value="{{$price ? $price  : old('price')}}">
-                                            @error('price')
-                                            <span style="color: red">{{$message}}</span>
-                                            @enderror
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Product Price.</label>
+                                        <div class="card-body">
+                                            @foreach($prices as $price)
+                                                <div class="form-group row">
+                                                    @if ($id > 0)
+                                                        <label for="inputEmail3"
+                                                               class="col-sm-2 col-form-label">{{$price->name}}</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id=""
+                                                                   name="price[]"
+                                                                   value="{{$price->price ? $price->price : old('price')}}">
+                                                            @error('price')
+                                                            <span style="color: red">{{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    @else
+                                                        <label for="inputEmail3"
+                                                               class="col-sm-2 col-form-label">{{$price['name']}}</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id=""
+                                                                   name="price[]"
+                                                                   value="{{$price['price'] ? $price['price'] : old('price')}}">
+                                                            @error('price')
+                                                            <span style="color: red">{{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Slab Prices.</label>
+                                        <div class="card-body">
+                                            @foreach($slab_prices as $slab_price)
+                                                @foreach($slab_price as $price)
+                                                    {{$price['name']}}
+                                                    <div class="form-group row">
+                                                        @if ($id > 0)
+                                                            <label for="inputEmail3"
+                                                                   class="col-sm-2 col-form-label">{{$slab_price->name}}</label>
+                                                            <div class="col-sm-3">
+                                                                <input type="text" class="form-control" id=""
+                                                                       name="mrp[]" placeholder="Enter Qty"
+                                                                       value="{{$slab_price->mrp ? $mrp->mrp : old('mrp')}}">
+                                                                @error('mrp')
+                                                                <span style="color: red">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input type="text" class="form-control" id=""
+                                                                       name="mrp[]"
+                                                                       value="{{$slab_price->mrp ? $mrp->mrp : old('mrp')}}">
+                                                                @error('mrp')
+                                                                <span style="color: red">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input type="text" class="form-control" id=""
+                                                                       name="mrp[]"
+                                                                       value="{{$slab_price->mrp ? $mrp->mrp : old('mrp')}}">
+                                                                @error('mrp')
+                                                                <span style="color: red">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        @else
+                                                            <label for="inputEmail3"
+                                                                   class="col-sm-2 col-form-label">{{$price['name']}}</label>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" class="form-control" id=""
+                                                                       placeholder="Enter Qty"
+                                                                       name="slabQty[]"
+                                                                       value="{{$price['qty'] ? $price['qty'] : old('qty')}}">
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" class="form-control" id=""
+                                                                       placeholder="Enter Price"
+                                                                       name="slabPrice[]"
+                                                                       value="{{$price['price'] ? $price['price'] : old('price')}}">
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" class="form-control" id=""
+                                                                       name="slabMargin[]" placeholder="Enter Margin"
+                                                                       value="{{$price['margin'] ? $price['margin'] : old('margin')}}">
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <a class="btn btn-outline-primary btn-block">
+                                                                    <i class="fas fa-plus"></i>
+                                                                </a>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+
+                                                @endforeach
+
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +310,8 @@
 
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Legal Disclaimer</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Legal
+                                            Disclaimer</label>
                                         <div class="col-sm-10">
                                             <textarea type="text" id="legal_disclaimer" name="legal_disclaimer"
                                                       class="ckeditor form-control col-md-7 col-xs-12"
@@ -183,74 +321,39 @@
                                 </div>
 
 
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Documents</label>
+                                        <div class="needsclick dropzone col-sm-10" id="document-dropzone">
+                                            @foreach($productImagesArr as $key=>$val)
+                                                @if(env('APP_ENV') == 'production')
+                                                    @if($val['image']!='' && Storage::disk('s3')->exists($val['image']))
+                                                        <a href="/{{Storage::disk('s3')->url($val['image'])}}"
+                                                           target="_blank"><img
+                                                                width="50px" height="50px"
+                                                                src="{{Storage::disk('s3')->url($val['image'])}}"/><a
+                                                                href="{{url('admin/products/product_images_delete/')}}/{{$val['id']}}/{{$id}}">Remove</a>
+                                                            @endif
+                                                            @else
+                                                                @if($val['image']!='')
+                                                                    <a href="/{{$val['image']}}" target="_blank"><img
+                                                                            width="50px" height="50px"
+                                                                            src="/{{$val['image']}}"
+                                                                        /> <a
+                                                                            href="{{url('admin/products/product_images_delete/')}}/{{$val['id']}}/{{$id}}">click
+                                                                            remove</a></a>
+                                                                @endif
+                                                            @endif
 
-                                <div id="product_images_box">
-
-                                    @php
-                                        $loop_count_num=1;
-                                    @endphp
-                                    @foreach($productImagesArr as $key=>$val)
-                                        @php
-                                            $loop_count_prev=$loop_count_num;
-                                        @endphp
-                                        <div class="card-body">
-                                            <input id="piid" type="hidden" name="piid[]"
-                                                   value="{{$val['id']}}">
-                                            <div class="form-group row product_images_{{$loop_count_num++}}">
-                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Product Image</label>
-                                                <div class="col-sm-8">
-                                                    <div class="custom-file">
-                                                        <input type="file" name="images[]" class="custom-file-input" id="exampleInputFile">
-                                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                                    </div>
-                                                    @if(env('APP_ENV') == 'production')
-                                                        @if($val['image']!='' && Storage::disk('s3')->exists($val['image']))
-                                                            <a href="/{{Storage::disk('s3')->url($val['image'])}}"
-                                                               target="_blank"><img
-                                                                    width="100px"
-                                                                    src="{{Storage::disk('s3')->url($val['image'])}}"/></a>
-                                                        @endif
-                                                    @else
-                                                        @if($val['image']!='')
-                                                            <a href="/{{$val['image']}}" target="_blank"><img
-                                                                    width="100px" src="/{{$val['image']}}"
-                                                                    style="border: 10px solid black; border-radius: 50%; "/></a>
-                                                        @endif
-                                                    @endif
-                                                    @error('images')
-                                                    <span style="color: red">{{$message}}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label for="images" class="control-label mb-1">
-                                                        &nbsp;&nbsp;&nbsp;</label>
-
-                                                    @if($loop_count_num==2)
-                                                        <button type="button" class="btn btn-success btn-lg"
-                                                                onclick="add_image_more()">
-                                                            <i class="fa fa-plus"></i>&nbsp; Add
-                                                        </button>
-                                                    @else
-                                                        <a href="{{url('admin/products/product_images_delete/')}}/{{$val['id']}}/{{$id}}">
-                                                            <button type="button"
-                                                                    class="btn btn-danger btn-lg">
-                                                                <i class="fa fa-minus"></i>&nbsp; Remove
-                                                            </button>
-                                                        </a>
-                                                    @endif
-                                                </div>
-                                            </div>
+                                                            @error('document')
+                                                            <span style="color: red">{{$message}}</span>
+                                                        @enderror
+                                                        @endforeach
                                         </div>
-                                    @endforeach
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="document">Documents</label>
-                                    <div class="needsclick dropzone" id="document-dropzone">
 
                                     </div>
-                                </div>
 
+                                </div>
 
 
                                 <input type="hidden" name="id" value="{{$id}}"/>
@@ -308,7 +411,7 @@
 
         var uploadedDocumentMap = {}
         Dropzone.options.documentDropzone = {
-            url: '{{ route('projects.storeMedia') }}',
+            url: '{{ route('product.storeMedia') }}',
             maxFilesize: 2, // MB
             addRemoveLinks: true,
             headers: {
@@ -319,7 +422,6 @@
                 uploadedDocumentMap[file.name] = response.name
             },
             removedfile: function (file) {
-                alert(file.name);
                 file.previewElement.remove()
                 var name = ''
                 if (typeof file.file_name !== 'undefined') {
@@ -330,16 +432,6 @@
                 $('form').find('input[name="document[]"][value="' + name + '"]').remove()
             },
             init: function () {
-                    @if(isset($project) && $project->document)
-                var files =
-                {!! json_encode($project->document) !!}
-                    for (var i in files) {
-                    var file = files[i]
-                    this.options.addedfile.call(this, file)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
-                }
-                @endif
             }
         }
 

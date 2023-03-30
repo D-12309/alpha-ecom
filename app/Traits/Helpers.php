@@ -5,6 +5,7 @@ namespace App\Traits;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\UserCategory;
 
 trait Helpers
 {
@@ -32,6 +33,11 @@ trait Helpers
 
     public static function getBrand() {
         return Brand::pluck('name','id');
+    }
+
+    public static function getUserCategory($id) {
+         $userCategory = UserCategory::pluck('name');
+         return $userCategory[$id];
     }
 
 }

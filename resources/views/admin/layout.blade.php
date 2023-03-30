@@ -224,6 +224,16 @@
                             </p>
                         </a>
                     </li>
+                    </li><li class="nav-header">User Category</li>
+                    <li class="nav-item menu-open">
+                        <a href="{{url('admin/user-categories')}}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                User Categories
+                            </p>
+                        </a>
+                    </li>
+
                     <li class="nav-header">CATEGORY</li>
                     <li class="nav-item menu-open">
                         <a href="{{url('admin/categories')}}" class="nav-link ">
@@ -278,6 +288,8 @@
                             </p>
                         </a>
                     </li>
+
+
 
                 </ul>
             </nav>

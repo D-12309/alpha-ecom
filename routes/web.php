@@ -41,6 +41,14 @@ Route::group( ['middleware' => ['admin_auth'],'prefix' => 'admin'], function () 
         Route::get('/delete/{id}', [CategoryController::class, 'delete']);
     });
 
+    Route::group( ['prefix' => 'user-categories'], function () {
+        Route::get('/', [UserController::class, 'user_category']);
+        Route::get('/user_manage_category', [UserController::class, 'user_manage_category']);
+        Route::post('/manage_user_category_process', [UserController::class, 'manage_user_category_process'])->name('user.manage_user_category_process');
+        Route::get('/user_manage_category/{id}', [UserController::class, 'user_manage_category']);
+        Route::get('/delete/{id}', [UserController::class, 'delete']);
+    });
+
     Route::group( ['prefix' => 'brands'], function () {
         Route::get('/', [BrandController::class, 'index']);
         Route::get('/manage_brand', [BrandController::class, 'manage_brand']);
@@ -64,10 +72,7 @@ Route::group( ['middleware' => ['admin_auth'],'prefix' => 'admin'], function () 
         Route::get('/manage_product/{id}', [ProductController::class, 'manage_product']);
         Route::get('/delete/{id}', [ProductController::class, 'delete']);
         Route::get('/product_images_delete/{paid}/{pid}',[ProductController::class,'product_images_delete']);
-        Route::post('projects/media1', [ProductController::class, 'storeMedia'])->name('projects.storeMedia');
-        Route::post('projects/media2', [ProductController::class, 'store'])->name('projects.store');
-
-
+        Route::post('product/media', [ProductController::class, 'storeMedia'])->name('product.storeMedia');
     });
 
     Route::group( ['prefix' => 'faqs'], function () {
