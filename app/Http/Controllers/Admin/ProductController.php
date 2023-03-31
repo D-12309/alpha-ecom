@@ -35,8 +35,10 @@ class ProductController extends Controller
             $result['name'] = $product->name;
             $result['sku'] = $product->sku;
             $result['quantity'] = json_decode($product->qty);
+            $result['slab_prices'] = json_decode($product->slab_price);
             $result['mrps'] = json_decode($product->mrp);
             $result['prices'] = json_decode($product->price);
+            //return $result;
             $result['brand_id'] = $product->brand_id;
             $result['category_id'] = $product->category_id;
             $result['description'] = $product->description;
@@ -71,7 +73,6 @@ class ProductController extends Controller
                 $preparedPriceObject[] = $priceObject;
                 $preparedSlabPriceObj[] = $slabPrice;
             }
-
             $result['quantity'] = $preparedQtyObject;
             $result['name'] = "";
             $result['sku'] = "";
@@ -96,8 +97,7 @@ class ProductController extends Controller
 
     public function manage_product_process(Request $request)
     {
-
-        $request->validate([
+        /*$request->validate([
             //'sku' => 'required|unique:products,sku,' . $request->post('id'),
             //'price' => 'required|array',
             //'mrp' => 'required|array',
@@ -105,7 +105,7 @@ class ProductController extends Controller
             //'qty.*' => 'string',
             //'document' => 'required',
             'name' => 'required'
-        ]);
+        ]);*/
         $productImage = null;
 
         $destinationPath = 'products';
@@ -117,6 +117,19 @@ class ProductController extends Controller
             $preparedQtyObject = $preparedMrpObject = $preparedPriceObject = [];
             $price = $request->post('price');
             $mrp = $request->post('mrp');
+            $salabMargin = $request->post('slabMargin');
+            $slabPrices = $request->post('slabPrice');
+            $preparedSlabPriceObj = [];
+            foreach ($request->post('slabQty') as $category => $slabQty) {
+                foreach ($slabQty as $key => $qty) {
+                    $slabPriceObj = [];
+                    $slabPriceObj['name'] = $category;
+                    $slabPriceObj['qty'] = $qty;
+                    $slabPriceObj['price'] = $slabPrices[$category][$key];
+                    $slabPriceObj['margin'] = $salabMargin[$category][$key];
+                    $preparedSlabPriceObj[$category][] = $slabPriceObj;
+                }
+            }
             foreach ($request->post('qty') as $key => $qty) {
                 $categoryName = Helpers::getUserCategory($key);
                 $qtyObject = $mrpObject = $priceObject = [];
@@ -130,9 +143,12 @@ class ProductController extends Controller
                 $preparedMrpObject[] = $mrpObject;
                 $preparedPriceObject[] = $priceObject;
             }
-            $product->qty =json_encode($preparedQtyObject);
+
+
+            $product->qty = json_encode($preparedQtyObject);
             $product->mrp = json_encode($preparedMrpObject);
             $product->price = json_encode($preparedPriceObject);
+            $product->slab_price = json_encode($preparedSlabPriceObj);
             $product->description = $request->post('description');
             $product->brand_id = $request->post('brand_id');
             $product->category_id = $request->post('category_id');
@@ -154,8 +170,21 @@ class ProductController extends Controller
             $preparedQtyObject = [];
             $price = $request->post('price');
             $mrp = $request->post('mrp');
+            $salabMargin = $request->post('slabMargin');
+            $slabPrices = $request->post('slabPrice');
+            $preparedSlabPriceObj = [];
+            foreach ($request->post('slabQty') as $category => $slabQty) {
+                foreach ($slabQty as $key => $qty) {
+                    $slabPriceObj = [];
+                    $slabPriceObj['name'] = $category;
+                    $slabPriceObj['qty'] = $qty;
+                    $slabPriceObj['price'] = $slabPrices[$category][$key];
+                    $slabPriceObj['margin'] = $salabMargin[$category][$key];
+                    $preparedSlabPriceObj[$category][] = $slabPriceObj;
+                }
+            }
+            $product->slab_price = json_encode($preparedSlabPriceObj);
             foreach ($request->post('qty') as $key => $qty) {
-
                 $categoryName = Helpers::getUserCategory($key);
                 $qtyObject = $mrpObject = $priceObject = [];
                 $qtyObject['name'] = $categoryName;
@@ -168,7 +197,8 @@ class ProductController extends Controller
                 $preparedMrpObject[] = $mrpObject;
                 $preparedPriceObject[] = $priceObject;
             }
-            $product->qty =json_encode($preparedQtyObject);
+            $product->qty = json_encode($preparedQtyObject);
+            $product->slab_price = json_encode($preparedSlabPriceObj);
             $product->mrp = json_encode($preparedMrpObject);
             $product->price = json_encode($preparedPriceObject);
             $product->description = $request->post('description');

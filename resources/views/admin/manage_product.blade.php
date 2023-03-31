@@ -176,73 +176,106 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Slab Prices.</label>
-                                        <div class="card-body">
-                                            @foreach($slab_prices as $slab_price)
-                                                @foreach($slab_price as $price)
-                                                    {{$price['name']}}
-                                                    <div class="form-group row">
-                                                        @if ($id > 0)
-                                                            <label for="inputEmail3"
-                                                                   class="col-sm-2 col-form-label">{{$slab_price->name}}</label>
-                                                            <div class="col-sm-3">
-                                                                <input type="text" class="form-control" id=""
-                                                                       name="mrp[]" placeholder="Enter Qty"
-                                                                       value="{{$slab_price->mrp ? $mrp->mrp : old('mrp')}}">
-                                                                @error('mrp')
-                                                                <span style="color: red">{{$message}}</span>
-                                                                @enderror
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <input type="text" class="form-control" id=""
-                                                                       name="mrp[]"
-                                                                       value="{{$slab_price->mrp ? $mrp->mrp : old('mrp')}}">
-                                                                @error('mrp')
-                                                                <span style="color: red">{{$message}}</span>
-                                                                @enderror
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <input type="text" class="form-control" id=""
-                                                                       name="mrp[]"
-                                                                       value="{{$slab_price->mrp ? $mrp->mrp : old('mrp')}}">
-                                                                @error('mrp')
-                                                                <span style="color: red">{{$message}}</span>
-                                                                @enderror
-                                                            </div>
-                                                        @else
-                                                            <label for="inputEmail3"
-                                                                   class="col-sm-2 col-form-label">{{$price['name']}}</label>
-                                                            <div class="col-sm-2">
-                                                                <input type="text" class="form-control" id=""
-                                                                       placeholder="Enter Qty"
-                                                                       name="slabQty[]"
-                                                                       value="{{$price['qty'] ? $price['qty'] : old('qty')}}">
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <input type="text" class="form-control" id=""
-                                                                       placeholder="Enter Price"
-                                                                       name="slabPrice[]"
-                                                                       value="{{$price['price'] ? $price['price'] : old('price')}}">
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <input type="text" class="form-control" id=""
-                                                                       name="slabMargin[]" placeholder="Enter Margin"
-                                                                       value="{{$price['margin'] ? $price['margin'] : old('margin')}}">
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <a class="btn btn-outline-primary btn-block">
-                                                                    <i class="fas fa-plus"></i>
-                                                                </a>
-                                                            </div>
-                                                        @endif
-                                                    </div>
 
-                                                @endforeach
+                                    @foreach($slab_prices as $slab_price)
+                                        @php
+                                            $loop_count_num=1;
+                                        @endphp
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Slab
+                                                Prices.</label>
+                                            <div class="card-body">
+                                        @foreach($slab_price as $key => $price)
+                                            @php
+                                                $loop_count_prev=$loop_count_num;
+                                            @endphp
 
-                                            @endforeach
+
+                                                    @if ($id > 0)
+                                                        <div id="product_images_box_{{$price->name}}">
+                                                            <div
+                                                                class="form-group row product_images_{{$price->name}}_{{$loop_count_num++}}">
+                                                                <label for="inputEmail3"
+                                                                       class="col-sm-2 col-form-label">{{$price->name}}</label>
+                                                                <div class="col-sm-2">
+                                                                    <input type="text" class="form-control" id=""
+                                                                           placeholder="Enter Qty"
+                                                                           name="slabQty[{{$price->name}}][]"
+                                                                           value="{{$price->qty ? $price->qty : old('qty')}}">
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <input type="text" class="form-control" id=""
+                                                                           placeholder="Enter Price"
+                                                                           name="slabPrice[{{$price->name}}][]"
+                                                                           value="{{$price->price ? $price->price : old('price')}}">
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <input type="text" class="form-control" id=""
+                                                                           name="slabMargin[{{$price->name}}][]"
+                                                                           placeholder="Enter Margin"
+                                                                           value="{{$price->margin ? $price->margin : old('margin')}}">
+                                                                </div>
+                                                                @if($loop_count_num==2)
+                                                                    <div class="col-sm-1">
+                                                                        <a class="btn btn-outline-primary btn-block"
+                                                                           onclick="add_slab_module('{{$price->name}}')">
+                                                                            <i class="fas fa-plus"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                @else
+                                                                    @php
+                                                                        $loop = $loop_count_num;
+                                                                    @endphp
+                                                                    <div class="col-sm-1">
+                                                                        <a class="btn btn-outline-danger btn-block"
+                                                                           onclick="remove_image_more('{{$loop -1}}','{{$price->name}}')">
+                                                                            <i class="fas fa-minus"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                @endif
+
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div id="product_images_box_{{$price['name']}}">
+                                                            <div
+                                                                class="form-group row product_images_{{$price['name']}}_{{$loop_count_num++}}">
+                                                                <label for="inputEmail3"
+                                                                       class="col-sm-2 col-form-label">{{$price['name']}}</label>
+                                                                <div class="col-sm-2">
+                                                                    <input type="text" class="form-control" id=""
+                                                                           placeholder="Enter Qty"
+                                                                           name="slabQty[{{$price['name']}}][]"
+                                                                           value="{{$price['qty'] ? $price['qty'] : old('qty')}}">
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <input type="text" class="form-control" id=""
+                                                                           placeholder="Enter Price"
+                                                                           name="slabPrice[{{$price['name']}}][]"
+                                                                           value="{{$price['price'] ? $price['price'] : old('price')}}">
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <input type="text" class="form-control" id=""
+                                                                           name="slabMargin[{{$price['name']}}][]"
+                                                                           placeholder="Enter Margin"
+                                                                           value="{{$price['margin'] ? $price['margin'] : old('margin')}}">
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <a class="btn btn-outline-primary btn-block"
+                                                                       onclick="add_slab_module('{{$price['name']}}','{{$loop_count_num}}')">
+                                                                        <i class="fas fa-plus"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+
+
+                                        @endforeach
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endforeach
+
                                 </div>
 
                                 <div class="card-body">
@@ -438,35 +471,41 @@
         var loop_count = 1;
         var loop_image_count = 1;
 
-        /*function add_image_more() {
-            loop_image_count++;
-            console.log(loop_image_count);
-            var html = '<div class="form-group product_images_' + loop_image_count + '"><input id="piid" type="hidden" name="piid[]" value=""><div><label for="images" class="control-label col-md-3 col-sm-3 col-xs-12"> Image</label><div class="col-md-3 col-sm-6 col-xs-12"><input id="images" name="images[]" type="file" class="form-control" aria-required="true" aria-invalid="false" required></div></div>';
+        function add_slab_module(name,loop_image_count) {
+                loop_image_count++;
+            console.log(name);
+            var html = '<div  class="form-group row product_images_' + name + '_' + loop_image_count + '"><label for="inputEmail3"\n' +
+                '                                                                   class="col-sm-2 col-form-label"></label>\n' +
+                '                                                            <div class="col-sm-2">\n' +
+                '                                                                <input type="text" class="form-control" id=""\n' +
+                '                                                                       placeholder="Enter Qty"\n' +
+                '                                                                       name="slabQty[' + name + '][]"\n' +
+                '                                                                       >\n' +
+                '                                                            </div>\n' +
+                '                                                            <div class="col-sm-2">\n' +
+                '                                                                <input type="text" class="form-control" id=""\n' +
+                '                                                                       placeholder="Enter Price"\n' +
+                '                                                                       name="slabPrice[' + name + '][]"\n' +
+                '                                                                      ">\n' +
+                '                                                            </div>\n' +
+                '                                                            <div class="col-sm-2">\n' +
+                '                                                                <input type="text" class="form-control" id=""\n' +
+                '                                                                       name="slabMargin[' + name + '][]" placeholder="Enter Margin"\n' +
+                '                                                                     >\n' +
+                '                                                            </div>\n' +
+                '                                                            <div class="col-sm-1">\n' +
+                '                                                                <a class="btn btn-outline-danger btn-block" onclick=remove_image_more("' + loop_image_count + '","' + name + '")>\n' +
+                '                                                                    <i class="fas fa-minus"></i>\n' +
+                '                                                                </a>\n' +
+                '                                                            </div>';
             //product_images_box
-            html += '<div class="col-md-2 product_images_' + loop_image_count + '""><label for="attr_image" class="control-label mb-1"> &nbsp;&nbsp;&nbsp;</label><button type="button" class="btn btn-danger btn-lg" onclick=remove_image_more("' + loop_image_count + '")><i class="fa fa-minus"></i>&nbsp; Remove</button></div></div>';
-            jQuery('#product_images_box').append(html)
-        }*/
 
-        function add_image_more() {
-            loop_image_count++;
-            console.log(loop_image_count);
-            var html = '<div class="card-body"><div class="form-group row product_images_' + loop_image_count + '"><label for="inputEmail3" class="col-sm-2 col-form-label">Product Image</label> <div class="col-sm-8">\n' +
-                '                                                    <div class="custom-file">\n' +
-                '                                                        <input type="file" name="images[]" class="custom-file-input" id="exampleInputFile">\n' +
-                '                                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>\n' +
-                '                                                    </div></div>';
-            //product_images_box
-            html += ' <div class="col-md-2 product_images_' + loop_image_count + '">\n' +
-                '                                                    <label for="images" class="control-label mb-1">\n' +
-                '                                                        &nbsp;&nbsp;&nbsp;</label><button  onclick=remove_image_more("' + loop_image_count + '") type="button"\n' +
-                '                                                                    class="btn btn-danger btn-lg">\n' +
-                '                                                                <i class="fa fa-minus"></i>&nbsp; \n' +
-                '                                                            </button></div></div>';
-            jQuery('#product_images_box').append(html)
+            jQuery('#product_images_box_' + name).append(html)
         }
 
-        function remove_image_more(count) {
-            jQuery('.product_images_' + count).remove();
+        function remove_image_more(count, name) {
+            console.log('.product_images_' + name + '_' + count)
+            jQuery('.product_images_' + name + '_' + count).remove();
         }
 
         $(document).ready(function () {

@@ -39,6 +39,7 @@ class CategoryController extends Controller
 
     public function manage_category_process(Request $request)
     {
+        return $request->all();
         $request->validate([
             'name' => 'required|unique:categories,name,' . $request->post('id')
         ]);

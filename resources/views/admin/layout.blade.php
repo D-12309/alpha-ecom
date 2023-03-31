@@ -239,7 +239,7 @@
                         <a href="{{url('admin/categories')}}" class="nav-link ">
                             <i class="far fa-circle nav-icon"></i>
                             <p>
-                                Categories
+                               Product Categories
                             </p>
                         </a>
                     </li>
