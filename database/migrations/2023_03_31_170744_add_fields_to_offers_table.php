@@ -19,8 +19,8 @@ class AddFieldsToOffersTable extends Migration
             $table->integer('min_amount')->nullable();
             $table->integer('min_qty')->nullable();
             $table->json('valid_user')->nullable();
-            $table->integer('valid_product')->nullable();
-            $table->integer('min_qty')->nullable();
+            $table->json('valid_product')->nullable();
+            $table->string('code');
         });
     }
 
@@ -38,7 +38,7 @@ class AddFieldsToOffersTable extends Migration
             $table->dropColumn('min_qty');
             $table->dropColumn('valid_user');
             $table->dropColumn('valid_product');
-            $table->dropColumn('min_qty');
+            $table->dropColumn('code');
         });
     }
 }

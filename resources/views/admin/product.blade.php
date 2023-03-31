@@ -58,8 +58,7 @@
                                         <th class="">#</th>
                                         <th class="">Product Name</th>
                                         <th class="">Image</th>
-                                        <th class="">MRP</th>
-                                        <th class="">Price</th>
+                                        <th class="">SKU</th>
                                         <th class="">Created At</th>
                                         <th class="">Action</th>
                                     </tr>
@@ -76,8 +75,7 @@
                                             @else
                                                 <td> <img src="/{{$list['productImages'][0]['image']}}" width="100px"></td>
                                             @endif
-                                            <td class=" ">{{$list->mrp}}</td>
-                                            <td class=" ">{{$list->price}}</td>
+                                            <td class=" ">{{$list->sku}}</td>
 
                                             <td class=" ">{{\Carbon\Carbon::parse($list->created_at)->format('l jS \of F Y h:i:s A')}}</td>
                                             <td class=" last"> <a
@@ -95,8 +93,7 @@
                                         <th class="">#</th>
                                         <th class="">Product Name</th>
                                         <th class="">Image</th>
-                                        <th class="">MRP</th>
-                                        <th class="">Price</th>
+                                        <th class="">SKU</th>
                                         <th class="">Created At</th>
                                         <th class="">Action</th>
                                     </tr>

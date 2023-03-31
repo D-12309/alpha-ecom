@@ -36,6 +36,7 @@ class CategoryController extends Controller
             $result['name'] = "";
             $result['image'] = "";
             $result['products'] = $products;
+            $result['mapProducts'] = [];
             $result['id'] = 0;
         }
 

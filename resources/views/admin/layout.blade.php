@@ -197,7 +197,6 @@
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                    <li class="nav-header">DASHBOARD</li>
                     <li class="nav-item menu-open">
                         <a href="{{url('admin/dashboard')}}" class="nav-link active">
                             <i class="far fa-circle nav-icon"></i>
@@ -206,7 +205,6 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-header">USER</li>
                     <li class="nav-item menu-open">
                         <a href="{{url('admin/users')}}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -215,21 +213,20 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-header">OFFER</li>
                     <li class="nav-item menu-open">
                         <a href="{{url('admin/offers')}}" class="nav-link ">
                             <i class="far fa-circle nav-icon"></i>
                             <p>
-                                Offers
+                                Discounts
                             </p>
                         </a>
                     </li>
                     <li class="nav-header">CATEGORY</li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon far fa-envelope"></i>
+                            <i class="nav-icon far fa-plus-square"></i>
                             <p>
-                                CATEGORY
+                                Categories
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
@@ -250,8 +247,15 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{url('admin/offer-categories')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        Offer Categories
+                                    </p>
+                                </a>
+                            </li>
                         </ul>
-                    <li class="nav-header">BRAND</li>
                     <li class="nav-item menu-open">
                         <a href="{{url('admin/brands')}}" class="nav-link ">
                             <i class="nav-icon fas fa-edit"></i>
@@ -260,7 +264,6 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-header">PRODUCT</li>
                     <li class="nav-item menu-open">
                         <a href="{{url('admin/products')}}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -270,16 +273,6 @@
                         </a>
                     </li>
 
-                    <li class="nav-header">FAQ</li>
-                    <li class="nav-item menu-open">
-                        <a href="{{url('admin/faqs')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>
-                                FAQ
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-header">PRIVACY POLICY</li>
                     <li class="nav-item menu-open">
                         <a href="{{url('admin/privacy-policy')}}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -287,7 +280,7 @@
                                 Privacy policy
                             </p>
                         </a>
-                    </li><li class="nav-header">FAQ</li>
+                    </li>
                     <li class="nav-item menu-open">
                         <a href="{{url('admin/faqs')}}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>

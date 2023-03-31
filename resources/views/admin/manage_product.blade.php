@@ -91,18 +91,7 @@
                                     </div>
                                 </div>
 
-                                <div class="card-body">
-                                    <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Product SKU</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="" name="sku"
-                                                   value="{{$sku ? $sku  : old('sku')}}">
-                                            @error('sku')
-                                            <span style="color: red">{{$message}}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
+
 
                                 <div class="card-body">
                                     <div class="form-group row">
@@ -175,11 +164,14 @@
                                     </div>
                                 </div>
 
+
+
                                 <div class="card-body">
-                                    <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Slab
-                                            Prices.</label>
+
                                         @foreach($slab_prices as $slab_price)
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Slab
+                                                Prices.</label>
                                             @php
                                                 $loop_count_num=1;
                                             @endphp
@@ -275,40 +267,24 @@
 
                                                 @endforeach
                                             </div>
+                                        </div>
 
                                         @endforeach
-                                    </div>
                                 </div>
 
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Brand</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Product SKU</label>
                                         <div class="col-sm-10">
-                                            <select type="text" id="is_application_submitted" name="brand_id"
-                                                    class="custom-select">
-                                                @foreach($brands as $Key=>$brand)
-                                                    <option
-                                                        value="{{$Key}}" {{$Key==$brand_id ? "selected" : ''}}>{{$brand}}</option>
-                                                @endforeach
-                                            </select>
+                                            <input type="text" class="form-control" id="" name="sku"
+                                                   value="{{$sku ? $sku  : old('sku')}}">
+                                            @error('sku')
+                                            <span style="color: red">{{$message}}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="card-body">
-                                    <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Category</label>
-                                        <div class="col-sm-10">
-                                            <select type="text" id="is_application_submitted" name="category_id"
-                                                    class="custom-select">
-                                                @foreach($categories as $Key=>$category)
-                                                    <option
-                                                        value="{{$Key}}" {{$Key==$category_id  ? "selected" : ''}}>{{$category}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="card-body">
                                     <div class="form-group row">
@@ -395,7 +371,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-info">Save Changes</button>
-                                    <a href="{{url('admin/brands')}}" class="btn btn-default float-right">Cancel</a>
+                                    <a href="{{url('admin/products')}}" class="btn btn-default float-right">Cancel</a>
                                 </div>
                                 <!-- /.card-footer -->
                             </form>

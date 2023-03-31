@@ -1,6 +1,6 @@
 @extends('admin/layout')
-@section('page_title','Discount Page')
-@section('discount_select','active')
+@section('page_title','Offer Category Page')
+@section('offer_category_select','active')
 @section('links')
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
@@ -17,12 +17,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Discounts</h1>
+                        <h1 class="m-0">Offer Categories</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Discounts</li>
+                            <li class="breadcrumb-item active">Offer Categories</li>
                         </ol>
                     </div><!-- /.col -->
 
@@ -40,10 +40,10 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-9">
-                                    <h3 class="card-title">Discount Details</h3>
+                                        <h3 class="card-title">Offer Categories Details</h3>
                                     </div>
                                     <div class="col-3">
-                                        <a href="{{url('admin/offers/manage_offer')}}" class="btn btn-block btn-outline-primary btn-lg float-left">Add Discount +</a>
+                                        <a href="{{url('admin/offer-categories/offer_manage_category')}}" class="btn btn-block btn-outline-primary btn-lg float-left">Add Offer Category +</a>
                                     </div>
                                 </div>
 
@@ -56,9 +56,7 @@
                                     <thead>
                                     <tr>
                                         <th class="">#</th>
-                                        <th class="">Discount Name</th>
-                                        <th class="">Value</th>
-                                        <th class="">Percentage/Rs.</th>
+                                        <th class="">Offer Category Name</th>
                                         <th class="">Created At</th>
                                         <th class="">Action</th>
                                     </tr>
@@ -68,19 +66,13 @@
                                         <tr class="">
                                             <td class=" ">{{$list->id}}</td>
                                             <td class=" ">{{$list->name}}</td>
-                                            <td class=" ">{{$list->value}}</td>
-                                            @if($list->type == 1)
-                                                <td class=" ">Rs.</td>
-                                            @else
-                                                <td class=" ">Percentage</td>
-                                            @endif
                                             <td class=" ">{{\Carbon\Carbon::parse($list->created_at)->format('l jS \of F Y h:i:s A')}}</td>
-                                            <td class=" last">     <a onclick="return confirm('Are you sure want to delete this record?')"
-                                                                      href="{{url('admin/offers/delete/')}}/{{$list->id}}"><i
-                                                        class="fa fa-trash"></i> <span class="text-muted"></span></a> <a
-                                                    href="{{url('admin/offers/manage_offer/')}}/{{$list->id}}"><i
+                                            <td class=" last"> <a
+                                                    href="{{url('admin/offer-categories/offer_manage_category/')}}/{{$list->id}}"><i
                                                         class="fa fa-edit"></i> <span class="text-muted"></span></a>
-
+                                                <a onclick="return confirm('Are you sure want to delete this record?')"
+                                                   href="{{url('admin/offer-categories/delete/')}}/{{$list->id}}"><i
+                                                        class="fa fa-trash"></i> <span class="text-muted"></span></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -88,9 +80,7 @@
                                     <tfoot>
                                     <tr>
                                         <th class="">#</th>
-                                        <th class="">Discount Name</th>
-                                        <th class="">Value</th>
-                                        <th class="">Percentage/Rs.</th>
+                                        <th class="">Offer Category Name</th>
                                         <th class="">Created At</th>
                                         <th class="">Action</th>
                                     </tr>
@@ -110,56 +100,6 @@
         <!-- Main content -->
         <!-- /.content -->
     </div>
-    <!-- page content -->
-    {{-- <div class="right_col" role="main" style="min-height: 1197px;">
-         <div>
-             <div class="page-title">
-                 <div class="title_left">
-                     <h3>Users</h3>
-                 </div>
-             </div>
-             <div class="row">
-                 <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px">
-                     <div class="x_panel">
-                         <div class="x_content">
-                             <div class="table-responsive">
-                                 <table class="table table-striped jambo_table bulk_action">
-                                     <thead>
-                                     <tr class="headings">
-                                         <th class="column-title">#</th>
-                                         <th class="column-title">User Name</th>
-                                         <th class="column-title">Email Address</th>
-                                         <th class="column-title">Contact No.</th>
-                                         <th class="column-title">Pin Code</th>
-                                         <th class="column-title">Created At</th>
-                                     </tr>
-                                     </thead>
-
-                                     <tbody>
-
-                                     @foreach($data as $list)
-                                         <tr class="even pointer">
-                                             <td class=" ">{{$list->id}}</td>
-                                             <td class=" ">{{$list->name}}</td>
-                                             <td class=" ">{{$list->email}}</td>
-                                             <td class=" ">{{$list->contact_no}}</td>
-                                             <td class=" ">{{$list->pin_code}}</td>
-                                             <td class=" ">{{\Carbon\Carbon::parse($list->created_at)->format('l jS \of F Y h:i:s A')}}</td>
-                                         </tr>
-                                     @endforeach
-                                     </tbody>
-                                 </table>
-                                 {!! $data->links() !!}
-                             </div>
-
-
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </div>--}}
-    <!-- /page content -->
 @endsection
 
 @section('scripts')

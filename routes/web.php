@@ -49,6 +49,14 @@ Route::group( ['middleware' => ['admin_auth'],'prefix' => 'admin'], function () 
         Route::get('/delete/{id}', [UserController::class, 'delete']);
     });
 
+    Route::group( ['prefix' => 'offer-categories'], function () {
+        Route::get('/', [OfferController::class, 'offer_category']);
+        Route::get('/offer_manage_category', [OfferController::class, 'offer_manage_category']);
+        Route::post('/manage_offer_category_process', [OfferController::class, 'manage_offer_category_process'])->name('offer.manage_offer_category_process');
+        Route::get('/offer_manage_category/{id}', [OfferController::class, 'offer_manage_category']);
+        Route::get('/delete/{id}', [OfferController::class, 'deleteCategory']);
+    });
+
     Route::group( ['prefix' => 'brands'], function () {
         Route::get('/', [BrandController::class, 'index']);
         Route::get('/manage_brand', [BrandController::class, 'manage_brand']);

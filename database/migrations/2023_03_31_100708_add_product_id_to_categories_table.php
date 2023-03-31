@@ -26,7 +26,7 @@ class AddProductIdToCategoriesTable extends Migration
     public function down()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->json('product_id')->nullable();
+            $table->dropColumn('product_id');
         });
     }
 }

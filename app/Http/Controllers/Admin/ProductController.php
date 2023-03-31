@@ -220,7 +220,8 @@ class ProductController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $category = Product::where('id', $id)->delete();
+        $productImage = ProductImage::where('product_id',$id)->delete();
+        $Product = Product::where('id', $id)->delete();
         return redirect('admin/products');
     }
 
