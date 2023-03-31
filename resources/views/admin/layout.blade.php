@@ -224,25 +224,33 @@
                             </p>
                         </a>
                     </li>
-                    </li><li class="nav-header">User Category</li>
-                    <li class="nav-item menu-open">
-                        <a href="{{url('admin/user-categories')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>
-                                User Categories
-                            </p>
-                        </a>
-                    </li>
-
                     <li class="nav-header">CATEGORY</li>
-                    <li class="nav-item menu-open">
-                        <a href="{{url('admin/categories')}}" class="nav-link ">
-                            <i class="far fa-circle nav-icon"></i>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon far fa-envelope"></i>
                             <p>
-                               Product Categories
+                                CATEGORY
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
-                    </li>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{url('admin/categories')}}" class="nav-link ">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        Product Categories
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('admin/user-categories')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        User Categories
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
                     <li class="nav-header">BRAND</li>
                     <li class="nav-item menu-open">
                         <a href="{{url('admin/brands')}}" class="nav-link ">

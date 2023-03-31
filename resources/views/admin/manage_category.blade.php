@@ -107,26 +107,21 @@
 
                                 <div class="card-body">
                                     <div class="form-group row">
-
-                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Map Product</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Map Product</label>
                                         <div class="col-sm-10">
-                                            <select class="select2" multiple="multiple" name="mapProduct[]" data-placeholder="Select a State" style="width: 100%;">
-                                                <option value="1">Alabama</option>
-                                                <option>Alaska</option>
-                                                <option>California</option>
-                                                <option>Delaware</option>
-                                                <option>Tennessee</option>
-                                                <option>Texas</option>
-                                                <option>Washington</option>
+                                            <select class="select2" multiple="multiple" name="mapProduct[]"
+                                                    data-placeholder="Select a State" style="width: 100%;">
+                                                @foreach($products as $key=>$product)
+                                                    @if(is_array($mapProducts) && in_array($key, $mapProducts))
+                                                        <option value="{{$key}}" selected>{{$product}}</option>
+                                                    @else
+                                                        <option value="{{$key}}">{{$product}}</option>
+                                                    @endif
+                                                @endforeach
                                             </select>
                                         </div>
-                                        <!-- /.form-group -->
                                     </div>
-                                    <!-- /.row -->
-                                    <!-- /.row -->
                                 </div>
-                                <!-- /.col -->
-
 
                                 <input type="hidden" name="id" value="{{$id}}"/>
                                 <!-- /.card-body -->

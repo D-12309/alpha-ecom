@@ -27,12 +27,19 @@ class UserController extends Controller
 
     public function user_manage_category(Request $request, $id = '')
     {
+
+        $users = User::whereNotNull('name')->pluck('name','id');
         if ($id > 0) {
             $category = UserCategory::where(['id' => $id])->first();
             $result['name'] = $category->name;
             $result['id'] = $category->id;
+            $result['mapUsers'] = json_decode($category->user_id);
+            $result['users'] = $users;
+
         } else {
             $result['name'] = "";
+            $result['users'] = $users;
+            $result['mapUsers'] = [];
             $result['id'] = 0;
         }
 
@@ -51,6 +58,7 @@ class UserController extends Controller
         }
 
         $category->name = $request->post('name');
+        $category->user_id = json_encode($request->post('mapUser'));
         $category->save();
         return redirect('admin/user-categories');
     }

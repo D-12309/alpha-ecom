@@ -176,23 +176,22 @@
                                 </div>
 
                                 <div class="card-body">
-
-                                    @foreach($slab_prices as $slab_price)
-                                        @php
-                                            $loop_count_num=1;
-                                        @endphp
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Slab
-                                                Prices.</label>
-                                            <div class="card-body">
-                                        @foreach($slab_price as $key => $price)
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Slab
+                                            Prices.</label>
+                                        @foreach($slab_prices as $slab_price)
                                             @php
-                                                $loop_count_prev=$loop_count_num;
+                                                $loop_count_num=1;
                                             @endphp
 
+                                            <div class="card-body">
 
+                                                @foreach($slab_price as $key => $price)
+                                                    @php
+                                                        $loop_count_prev=$loop_count_num;
+                                                    @endphp
                                                     @if ($id > 0)
-                                                        <div id="product_images_box_{{$price->name}}">
+                                                        <div id="product_images_box_{{$price->name}}_{{$key}}">
                                                             <div
                                                                 class="form-group row product_images_{{$price->name}}_{{$loop_count_num++}}">
                                                                 <label for="inputEmail3"
@@ -215,10 +214,14 @@
                                                                            placeholder="Enter Margin"
                                                                            value="{{$price->margin ? $price->margin : old('margin')}}">
                                                                 </div>
+                                                                @php
+                                                                    $count = 1;
+                                                                    @endphp
                                                                 @if($loop_count_num==2)
+
                                                                     <div class="col-sm-1">
                                                                         <a class="btn btn-outline-primary btn-block"
-                                                                           onclick="add_slab_module('{{$price->name}}')">
+                                                                           onclick="add_slab_module('{{count($slab_price) + $count++}}','{{$price->name}}','{{count($slab_price) - 1}}')">
                                                                             <i class="fas fa-plus"></i>
                                                                         </a>
                                                                     </div>
@@ -228,7 +231,7 @@
                                                                     @endphp
                                                                     <div class="col-sm-1">
                                                                         <a class="btn btn-outline-danger btn-block"
-                                                                           onclick="remove_image_more('{{$loop -1}}','{{$price->name}}')">
+                                                                           onclick="remove_image_more('{{$loop - 1}}','{{$price->name}}','{{$key}}')">
                                                                             <i class="fas fa-minus"></i>
                                                                         </a>
                                                                     </div>
@@ -237,7 +240,7 @@
                                                             </div>
                                                         </div>
                                                     @else
-                                                        <div id="product_images_box_{{$price['name']}}">
+                                                        <div id="product_images_box_{{$price['name']}}_{{$key}}">
                                                             <div
                                                                 class="form-group row product_images_{{$price['name']}}_{{$loop_count_num++}}">
                                                                 <label for="inputEmail3"
@@ -262,7 +265,7 @@
                                                                 </div>
                                                                 <div class="col-sm-1">
                                                                     <a class="btn btn-outline-primary btn-block"
-                                                                       onclick="add_slab_module('{{$price['name']}}','{{$loop_count_num}}')">
+                                                                       onclick="add_slab_module(0,'{{$price['name']}}',0)">
                                                                         <i class="fas fa-plus"></i>
                                                                     </a>
                                                                 </div>
@@ -270,12 +273,11 @@
                                                         </div>
                                                     @endif
 
+                                                @endforeach
+                                            </div>
 
                                         @endforeach
-                                            </div>
-                                        </div>
-                                    @endforeach
-
+                                    </div>
                                 </div>
 
                                 <div class="card-body">
@@ -470,10 +472,16 @@
 
         var loop_count = 1;
         var loop_image_count = 1;
+        var count = 0;
+        var key = 0;
 
-        function add_slab_module(name,loop_image_count) {
-                loop_image_count++;
-            console.log(name);
+        function add_slab_module(count, name, value) {
+            if (count) {
+                loop_image_count = count;
+                key = value;
+            }
+            loop_image_count++;
+            console.log(count);
             var html = '<div  class="form-group row product_images_' + name + '_' + loop_image_count + '"><label for="inputEmail3"\n' +
                 '                                                                   class="col-sm-2 col-form-label"></label>\n' +
                 '                                                            <div class="col-sm-2">\n' +
@@ -500,7 +508,7 @@
                 '                                                            </div>';
             //product_images_box
 
-            jQuery('#product_images_box_' + name).append(html)
+            jQuery('#product_images_box_' + name + '_' + key).append(html)
         }
 
         function remove_image_more(count, name) {
