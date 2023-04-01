@@ -41,6 +41,14 @@ Route::group( ['middleware' => ['admin_auth'],'prefix' => 'admin'], function () 
         Route::get('/delete/{id}', [CategoryController::class, 'delete']);
     });
 
+    Route::group( ['prefix' => 'admin-list'], function () {
+        Route::get('/', [AdminController::class, 'admin_list']);
+        Route::get('/manage_admin_list', [AdminController::class, 'manage_admin_list']);
+        Route::post('/manage_admin_list_process', [AdminController::class, 'manage_admin_list_process'])->name('adminList.manage_admin_list_process');
+        Route::get('/manage_admin_list/{id}', [AdminController::class, 'manage_admin_list']);
+        Route::get('/delete/{id}', [AdminController::class, 'delete']);
+    });
+
     Route::group( ['prefix' => 'user-categories'], function () {
         Route::get('/', [UserController::class, 'user_category']);
         Route::get('/user_manage_category', [UserController::class, 'user_manage_category']);

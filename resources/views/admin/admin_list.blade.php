@@ -1,6 +1,6 @@
 @extends('admin/layout')
-@section('page_title','Category Page')
-@section('product_category_select','active')
+@section('page_title','Admin List Page')
+@section('admin_list_select','active')
 @section('links')
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
@@ -17,12 +17,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Product Categories</h1>
+                        <h1 class="m-0">Admin List</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Product Categories</li>
+                            <li class="breadcrumb-item active">Admin List</li>
                         </ol>
                     </div><!-- /.col -->
 
@@ -40,10 +40,10 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-9">
-                                        <h3 class="card-title">Product Categories Details</h3>
+                                        <h3 class="card-title">Admin List Details</h3>
                                     </div>
                                     <div class="col-3">
-                                        <a href="{{url('admin/categories/manage_category')}}" class="btn btn-block btn-outline-primary btn-lg float-left">Add Product Category +</a>
+                                        <a href="{{url('admin/admin-list/manage_admin_list')}}" class="btn btn-block btn-outline-primary btn-lg float-left">Add Admin List +</a>
                                     </div>
                                 </div>
 
@@ -56,8 +56,8 @@
                                     <thead>
                                     <tr>
                                         <th class="">#</th>
-                                        <th class="">Category Name</th>
-                                        <th class="">Image</th>
+                                        <th class="">Email</th>
+                                        <th class="">Type</th>
                                         <th class="">Created At</th>
                                         <th class="">Action</th>
                                     </tr>
@@ -66,20 +66,14 @@
                                     @foreach($data as $list)
                                         <tr class="">
                                             <td class=" ">{{$list->id}}</td>
-                                            <td class=" ">{{$list->name}}</td>
-                                            @if(env('APP_ENV') == 'production')
-                                                @if (Storage::disk('s3')->exists($list->image))
-                                                    <td> <img src="{{Storage::disk('s3')->url($list->image)}}" width="100px"></td>
-                                                @endif
-                                            @else
-                                                <td> <img src="/{{$list->image }}" width="100px"></td>
-                                            @endif
+                                            <td class=" ">{{$list->email}}</td>
+                                            <td class=" ">{{$list->typeName}}</td>
                                             <td class=" ">{{\Carbon\Carbon::parse($list->created_at)->format('l jS \of F Y h:i:s A')}}</td>
                                             <td class=" last"> <a
-                                                    href="{{url('admin/categories/manage_category/')}}/{{$list->id}}"><i
+                                                    href="{{url('admin/admin-list/manage_admin_list/')}}/{{$list->id}}"><i
                                                         class="fa fa-edit"></i> <span class="text-muted"></span></a>
                                                 <a onclick="return confirm('Are you sure want to delete this record?')"
-                                                   href="{{url('admin/categories/delete/')}}/{{$list->id}}"><i
+                                                   href="{{url('admin/admin-list/delete/')}}/{{$list->id}}"><i
                                                         class="fa fa-trash"></i> <span class="text-muted"></span></a>
                                             </td>
                                         </tr>
@@ -88,8 +82,8 @@
                                     <tfoot>
                                     <tr>
                                         <th class="">#</th>
-                                        <th class="">Category Name</th>
-                                        <th class="">Image</th>
+                                        <th class="">Email</th>
+                                        <th class="">Type</th>
                                         <th class="">Created At</th>
                                         <th class="">Action</th>
                                     </tr>

@@ -1,6 +1,6 @@
 @extends('admin/layout')
-@section('page_title','Manage Category')
-@section('product_category_select','active')
+@section('page_title','Manage Admin List')
+@section('admin_list_select','active')
 @section('links')
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -38,12 +38,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Mange Product Category</h1>
+                        <h1 class="m-0">Mange Admin List</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Product Categories</li>
+                            <li class="breadcrumb-item active">Admin List</li>
                         </ol>
                     </div><!-- /.col -->
 
@@ -61,16 +61,18 @@
                         <!-- /.card-header -->
                         <div class="card card-info">
                             <div class="card-header">
-                                <h3 class="card-title">Manage Product Category Detail</h3>
+                                <h3 class="card-title">Manage Admin List Detail</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
                             <form class="form-horizontal" method="post"
-                                  action="{{route('category.manage_category_process')}}" enctype="multipart/form-data">
+                                  action="{{route('adminList.manage_admin_list_process')}}"
+                                  enctype="multipart/form-data">
                                 @csrf
+
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Category Name</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label"> Name</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="" name="name"
                                                    value="{{$name ? $name : old('name')}}">
@@ -83,22 +85,11 @@
 
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Category Image</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Admin Email</label>
                                         <div class="col-sm-10">
-                                            <div class="custom-file">
-                                                <input type="file" name="image" class="custom-file-input"
-                                                       id="exampleInputFile">
-                                                <label class="custom-file-label" for="exampleInputFile">Choose
-                                                    file</label>
-                                            </div>
-                                            @if(env('APP_ENV') == 'production')
-                                                @if (Storage::disk('s3')->exists($image))
-                                                    <img src="{{Storage::disk('s3')->url($image)}}" width="100px">
-                                                @endif
-                                            @else
-                                                <img src="/{{$image}}" width="300px">
-                                            @endif
-                                            @error('image')
+                                            <input type="email" class="form-control" id="" name="email"
+                                                   value="{{$email ? $email : old('email')}}">
+                                            @error('email')
                                             <span style="color: red">{{$message}}</span>
                                             @enderror
                                         </div>
@@ -107,19 +98,51 @@
 
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Map Product</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Create Password</label>
                                         <div class="col-sm-10">
-                                            <select class="select2" multiple="multiple" name="mapProduct[]"
-                                                    data-placeholder="Select a State" style="width: 100%;">
-                                                @foreach($products as $key=>$product)
-                                                    @if(is_array($mapProducts) && in_array($key, $mapProducts))
-                                                        <option value="{{$key}}" selected>{{$product}}</option>
+                                            <input type="password" class="form-control" id="" name="password"
+                                                   >
+                                            @error('password')
+                                            <span style="color: red">{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Confirm Password</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="" name="confirm_password" >
+                                            @error('confirm_password')
+                                            <span style="color: red">{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Type</label>
+                                        <div class="col-sm-10">
+                                            <select class="select2" name="type"
+                                                    data-placeholder="Select a Type" style="width: 100%;">
+                                                @foreach($types as $Key => $typeOption)
+                                                    @if($Key == $type)
+                                                        <option value="{{$Key}}"
+                                                                selected>{{$typeOption}}</option>
                                                     @else
-                                                        <option value="{{$key}}">{{$product}}</option>
+                                                        <option value="{{$Key}}">{{$typeOption}}</option>
                                                     @endif
                                                 @endforeach
+
                                             </select>
+                                            @error('type')
+                                            <span style="color: red">{{$message}}</span>
+                                            @enderror
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -127,7 +150,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-info">Save Changes</button>
-                                    <a href="{{url('admin/categories')}}" class="btn btn-default float-right">Cancel</a>
+                                    <a href="{{url('admin/admin-list')}}" class="btn btn-default float-right">Cancel</a>
                                 </div>
                                 <!-- /.card-footer -->
                             </form>

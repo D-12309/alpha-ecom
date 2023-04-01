@@ -40,4 +40,20 @@ trait Helpers
          return $userCategory[$id];
     }
 
+    public static function getTypes() {
+        return [
+            1 => "Super Admin",
+            "Sub Admin",
+        ];
+    }
+    public static function getType($type) {
+        if (!$type) return null;
+        $types = [
+            1 => "Super Admin",
+            "Sub Admin",
+        ];
+        $typeName = $types[$type];
+        return $typeName;
+    }
+
 }

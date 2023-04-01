@@ -25,6 +25,7 @@ Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
 Route::get('products', [ProductController::class, 'products']);
 Route::get('categories', [ProductController::class, 'categories']);
+Route::get('offer-categories', [ProductController::class, 'OfferCategories']);
 Route::get('brands', [ProductController::class, 'brands']);
 Route::get('offers', [ProductController::class, 'offers']);
 Route::get('trending', [ProductController::class, 'trending']);
