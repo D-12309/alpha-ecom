@@ -65,7 +65,7 @@ class ProductController extends Controller
                 $validProduct = json_decode($category->valid_product) ?? [];
                 $prepareOffer['category_name'] = $category->name;
                 $users = User::whereIn('id',$validUser)->get();
-                $products = Product::whereIn('id',$validProduct)->get();
+                $products = Product::with('productImages')->whereIn('id',$validProduct)->get();
                 $products = collect($products)->map(function ($product){
                     $product->mrp =  json_decode($product->mrp);
                     $product->price =  json_decode($product->price);
