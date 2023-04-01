@@ -90,14 +90,24 @@ class OfferController extends Controller
         }
         $offer->name = $request->post('name');
         $offer->code = $request->post('code');
-        $offer->min_amount = $request->post('min_amount');
-        $offer->min_qty = $request->post('min_qty');
+        if ($request->post('min_amount')) {
+            $request->validate([
+                'min_amount' => 'required|numeric',
+            ]);
+            $offer->min_amount = $request->post('min_amount');
+        }
+        if ($request->post('min_qty')) {
+            $request->validate([
+                'min_qty' => 'required|numeric',
+            ]);
+            $offer->min_qty = $request->post('min_qty');
+        }
         $offer->valid_product = json_encode($request->post('mapProduct')) ?? null;
         $offer->valid_user = json_encode($request->post('mapUser')) ?? null;
         $offer->value = $request->post('value');
         $offer->type = $request->post('type');
         $offer->save();
-        return redirect('admin/offers');
+        return redirect('admin/offers')->with('success', 'Record Saved Successfully');
     }
 
     public function delete(Request $request, $id)

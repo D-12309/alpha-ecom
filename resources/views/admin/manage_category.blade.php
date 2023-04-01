@@ -110,7 +110,7 @@
                                         <label for="inputEmail3" class="col-sm-2 col-form-label">Map Product</label>
                                         <div class="col-sm-10">
                                             <select class="select2" multiple="multiple" name="mapProduct[]"
-                                                    data-placeholder="Select a State" style="width: 100%;">
+                                                    data-placeholder="Select a Product" style="width: 100%;">
                                                 @foreach($products as $key=>$product)
                                                     @if(is_array($mapProducts) && in_array($key, $mapProducts))
                                                         <option value="{{$key}}" selected>{{$product}}</option>

@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('admin_assets/dist/css/adminlte.min.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{asset('admin_assets/plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{asset('admin_assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{asset('admin_assets/plugins/toastr/toastr.min.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{asset('admin_assets/dist/css/adminlte.min.css')}}">
 @endsection
 @section('container')
 
@@ -163,7 +172,14 @@
 @endsection
 
 @section('scripts')
-    <!-- DataTables  & Plugins -->
+    <!-- jQuery -->
+    <script src="{{asset('admin_assets/plugins/jquery/jquery.min.js')}}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{asset('admin_assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{asset('admin_assets/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    <!-- Toastr -->
+    <script src="{{asset('admin_assets/plugins/toastr/toastr.min.js')}}"></script>
     <script src="{{asset('admin_assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('admin_assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('admin_assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
@@ -176,7 +192,23 @@
     <script src="{{asset('admin_assets/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
     <script src="{{asset('admin_assets/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{asset('admin_assets/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
+
     <script>
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        var msg = '{{Session::get('success')}}';
+        var exist = '{{Session::has('success')}}';
+        if(exist){
+            Toast.fire({
+                icon: 'success',
+                title: msg
+            })
+        }
         $(function () {
             $("#example1").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
