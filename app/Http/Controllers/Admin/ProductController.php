@@ -10,7 +10,9 @@ use App\Models\User;
 use App\Models\UserCategory;
 use App\Traits\Helpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -98,14 +100,31 @@ class ProductController extends Controller
     public function manage_product_process(Request $request)
     {
         /*$request->validate([
-            //'sku' => 'required|unique:products,sku,' . $request->post('id'),
-            //'price' => 'required|array',
-            //'mrp' => 'required|array',
-            //'qty' => 'required|array',
-            //'qty.*' => 'string',
-            //'document' => 'required',
+            'sku' => 'required|unique:products,sku,' . $request->post('id'),
+            'price' => 'required|array',
+            'mrp.*' => 'required',
+            'qty' => 'required|array',
+            'qty.*' => 'required|integer',
+            'document' => 'required',
             'name' => 'required'
         ]);*/
+
+        $validator = Validator::make($request->all(), [
+            'sku' => 'required|unique:products,sku,' . $request->post('id'),
+            "name" => 'required',
+            "mrp.*" => 'required|numeric',
+            "price.*" => 'required|numeric',
+            "qty.*" => 'required|numeric',
+            "slabQty.*.*" => 'required|string',
+            "slabPrice.*.*" => 'required|numeric',
+            "slabMargin.*.*" => 'required|numeric',
+            'document' => 'required',
+            'description' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors());
+        }
         $productImage = null;
 
         $destinationPath = 'products';
@@ -120,6 +139,7 @@ class ProductController extends Controller
             $salabMargin = $request->post('slabMargin');
             $slabPrices = $request->post('slabPrice');
             $preparedSlabPriceObj = [];
+
             foreach ($request->post('slabQty') as $category => $slabQty) {
                 foreach ($slabQty as $key => $qty) {
                     $slabPriceObj = [];
@@ -157,10 +177,14 @@ class ProductController extends Controller
             $product->legal_disclaimer = $request->post('legal_disclaimer');
             $product->save();
             foreach ($request->input('document', []) as $file) {
-                $productImage = new ProductImage();
-                $productImage->product_id = $request->post('id');
-                $productImage->image = $file;
-                $productImage->save();
+                $isExitImage = ProductImage::where('image',$file)->first();
+                if(!$isExitImage) {
+                    $productImage = new ProductImage();
+                    $productImage->product_id = $request->post('id');
+                    $productImage->image = $file;
+                    $productImage->save();
+                }
+
             }
 
         } else {

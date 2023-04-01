@@ -68,9 +68,7 @@
                                                             <input type="text" class="form-control" id=""
                                                                    name="qty[]"
                                                                    value="{{$qty->qty ? $qty->qty : old('qty')}}">
-                                                            @error('qty')
-                                                            <span style="color: red">{{$message}}</span>
-                                                            @enderror
+                                                            <span style="color: red">{{$errors->has('qty.'.$key) ? $errors->first('qty.'.$key) : ''}}</span>
                                                         </div>
                                                     @else
                                                         <label for="inputEmail3"
@@ -79,13 +77,10 @@
                                                             <input type="text" class="form-control" id=""
                                                                    name="qty[]"
                                                                    value="{{$qty['qty'] ? $qty['qty'] : old('qty')}}">
-                                                            @error('qty')
-                                                            <span style="color: red">{{$message}}</span>
-                                                            @enderror
+                                                            <span style="color: red">{{$errors->has('qty.'.$key) ? $errors->first('qty.'.$key) : ''}}</span>
                                                         </div>
                                                     @endif
                                                 </div>
-
                                             @endforeach
                                         </div>
                                     </div>
@@ -97,7 +92,7 @@
                                     <div class="form-group row">
                                         <label for="inputEmail3" class="col-sm-2 col-form-label">Product Mrp.</label>
                                         <div class="card-body">
-                                            @foreach($mrps as $mrp)
+                                            @foreach($mrps as $key => $mrp)
                                                 <div class="form-group row">
                                                     @if ($id > 0)
                                                         <label for="inputEmail3"
@@ -106,9 +101,7 @@
                                                             <input type="text" class="form-control" id=""
                                                                    name="mrp[]"
                                                                    value="{{$mrp->mrp ? $mrp->mrp : old('mrp')}}">
-                                                            @error('mrp')
-                                                            <span style="color: red">{{$message}}</span>
-                                                            @enderror
+                                                                <span style="color: red">{{$errors->has('mrp.'.$key) ? $errors->first('mrp.'.$key) : ''}}</span>
                                                         </div>
                                                     @else
                                                         <label for="inputEmail3"
@@ -117,9 +110,7 @@
                                                             <input type="text" class="form-control" id=""
                                                                    name="mrp[]"
                                                                    value="{{$mrp['mrp'] ? $mrp['mrp'] : old('mrp')}}">
-                                                            @error('mrp')
-                                                            <span style="color: red">{{$message}}</span>
-                                                            @enderror
+                                                            <span style="color: red">{{$errors->has('mrp.'.$key) ? $errors->first('mrp.'.$key) : ''}}</span>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -142,9 +133,7 @@
                                                             <input type="text" class="form-control" id=""
                                                                    name="price[]"
                                                                    value="{{$price->price ? $price->price : old('price')}}">
-                                                            @error('price')
-                                                            <span style="color: red">{{$message}}</span>
-                                                            @enderror
+                                                            <span style="color: red">{{$errors->has('price.'.$key) ? $errors->first('price.'.$key) : ''}}</span>
                                                         </div>
                                                     @else
                                                         <label for="inputEmail3"
@@ -153,9 +142,7 @@
                                                             <input type="text" class="form-control" id=""
                                                                    name="price[]"
                                                                    value="{{$price['price'] ? $price['price'] : old('price')}}">
-                                                            @error('price')
-                                                            <span style="color: red">{{$message}}</span>
-                                                            @enderror
+                                                            <span style="color: red">{{$errors->has('price.'.$key) ? $errors->first('price.'.$key) : ''}}</span>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -193,18 +180,23 @@
                                                                            placeholder="Enter Qty"
                                                                            name="slabQty[{{$price->name}}][]"
                                                                            value="{{$price->qty ? $price->qty : old('qty')}}">
+                                                                    <span style="color: red">{{$errors->has('slabQty.'.$price->name.'.'.$key) ? $errors->first('slabQty.'.$price->name.'.'.$key) : ''}}</span>
                                                                 </div>
                                                                 <div class="col-sm-2">
                                                                     <input type="text" class="form-control" id=""
                                                                            placeholder="Enter Price"
                                                                            name="slabPrice[{{$price->name}}][]"
                                                                            value="{{$price->price ? $price->price : old('price')}}">
+                                                                    <span style="color: red">{{$errors->has('slabPrice.'.$price->name.'.'.$key) ? $errors->first('slabPrice.'.$price->name.'.'.$key) : ''}}</span>
+
                                                                 </div>
                                                                 <div class="col-sm-2">
                                                                     <input type="text" class="form-control" id=""
                                                                            name="slabMargin[{{$price->name}}][]"
                                                                            placeholder="Enter Margin"
                                                                            value="{{$price->margin ? $price->margin : old('margin')}}">
+                                                                    <span style="color: red">{{$errors->has('slabMargin.'.$price->name.'.'.$key) ? $errors->first('slabMargin.'.$price->name.'.'.$key) : ''}}</span>
+
                                                                 </div>
                                                                 @php
                                                                     $count = 1;
@@ -242,18 +234,24 @@
                                                                            placeholder="Enter Qty"
                                                                            name="slabQty[{{$price['name']}}][]"
                                                                            value="{{$price['qty'] ? $price['qty'] : old('qty')}}">
+                                                                    <span style="color: red">{{$errors->has('slabQty.'.$price['name'].'.'.$key) ? $errors->first('slabQty.'.$price['name'].'.'.$key) : ''}}</span>
+
                                                                 </div>
                                                                 <div class="col-sm-2">
                                                                     <input type="text" class="form-control" id=""
                                                                            placeholder="Enter Price"
                                                                            name="slabPrice[{{$price['name']}}][]"
                                                                            value="{{$price['price'] ? $price['price'] : old('price')}}">
+                                                                    <span style="color: red">{{$errors->has('slabPrice.'.$price['name'].'.'.$key) ? $errors->first('slabPrice.'.$price['name'].'.'.$key) : ''}}</span>
+
                                                                 </div>
                                                                 <div class="col-sm-2">
                                                                     <input type="text" class="form-control" id=""
                                                                            name="slabMargin[{{$price['name']}}][]"
                                                                            placeholder="Enter Margin"
                                                                            value="{{$price['margin'] ? $price['margin'] : old('margin')}}">
+                                                                    <span style="color: red">{{$errors->has('slabMargin.'.$price['name'].'.'.$key) ? $errors->first('slabMargin.'.$price['name'].'.'.$key) : ''}}</span>
+
                                                                 </div>
                                                                 <div class="col-sm-1">
                                                                     <a class="btn btn-outline-primary btn-block"
@@ -304,6 +302,10 @@
                                             <textarea type="text" id="is_application_submitted" name="description"
                                                       class="ckeditor form-control col-md-7 col-xs-12" required
                                             >{{$description}}</textarea>
+
+                                            @error('description')
+                                            <span style="color: red">{{$message}}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -344,6 +346,7 @@
                                                                 width="50px" height="50px"
                                                                 src="{{Storage::disk('s3')->url($val['image'])}}"/><a
                                                                 href="{{url('admin/products/product_images_delete/')}}/{{$val['id']}}/{{$id}}">Remove</a>
+                                                                <input type="hidden" name="document[]" value="{{$val['image']}}">
                                                             @endif
                                                             @else
                                                                 @if($val['image']!='')
@@ -353,6 +356,7 @@
                                                                         /> <a
                                                                             href="{{url('admin/products/product_images_delete/')}}/{{$val['id']}}/{{$id}}">click
                                                                             remove</a></a>
+                                                                    <input type="hidden" name="document[]" value="{{$val['image']}}">
                                                                 @endif
                                                             @endif
 
