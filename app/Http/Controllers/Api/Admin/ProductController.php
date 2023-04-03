@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\UserCategory;
 use Illuminate\Http\Request;
+use SebastianBergmann\ObjectReflector\InvalidArgumentException;
 
 class ProductController extends Controller
 {
@@ -24,16 +25,37 @@ class ProductController extends Controller
 
     public function category(Request $request)
     {
-        if ($request->post('category_id')) {
+        if ($request->post('category_id') && $request->post('user_id')) {
             $category = Category::where('id', $request->post('category_id'))->first();
             if ($category) {
                 $productIds = json_decode($category->product_id);
+                $validUserCategory = User::where('id', $request->post('user_id'))->value('user_category');
                 $products = Product::with('productImages')->whereIn('id', $productIds)->get();
-                $products = collect($products)->map(function ($product) {
+                $products = collect($products)->map(function ($product) use ($validUserCategory) {
                     $product->mrp = json_decode($product->mrp);
                     $product->price = json_decode($product->price);
                     $product->qty = json_decode($product->qty);
                     $product->slab_price = json_decode($product->slab_price);
+                    foreach ($product->mrp as $mrp) {
+                        if ($mrp->name == $validUserCategory) {
+                            $product->mrp = $mrp->mrp;
+                        }
+                    }
+                    foreach ($product->price as $price) {
+                        if ($price->name == $validUserCategory) {
+                            $product->price = (int)$price->price;
+                        }
+                    }
+                    foreach ($product->qty as $qty) {
+                        if ($qty->name == $validUserCategory) {
+                            $product->qty = $qty->qty;
+                        }
+                    }
+                    foreach ($product->slab_price as $key => $slab_price) {
+                        if ($key == $validUserCategory) {
+                            $product->slab_price = $slab_price;
+                        }
+                    }
                     return $product;
                 });
                 $result['products'] = $products;
@@ -56,19 +78,84 @@ class ProductController extends Controller
 
     public function products(Request $request)
     {
-        $result['products'] = Product::with(['productImages', 'category', 'brand'])->get();
-        return response()->json(['data' => $result], $this->successStatus);
-    }
-
-    public function product(Request $request)
-    {
-        if ($request->post('product_id')) {
-            $products = Product::with('productImages')->where('id', $request->post('product_id'))->get();
-            $products = collect($products)->map(function ($product) {
+        if ($request->post('user_id')) {
+            $validUserCategory = User::where('id', $request->post('user_id'))->value('user_category');
+            $products = Product::with('productImages');
+            if ($request->post('sort_order')) {
+                $products = $products->orderBy('name', $request->post('sort_order'))->get();
+            } else {
+                $products = $products->get();
+            }
+            $products = collect($products)->map(function ($product) use ($validUserCategory) {
                 $product->mrp = json_decode($product->mrp);
                 $product->price = json_decode($product->price);
                 $product->qty = json_decode($product->qty);
                 $product->slab_price = json_decode($product->slab_price);
+                foreach ($product->mrp as $mrp) {
+                    if ($mrp->name == $validUserCategory) {
+                        $product->mrp = $mrp->mrp;
+                    }
+                }
+                foreach ($product->price as $price) {
+                    if ($price->name == $validUserCategory) {
+                        $product->price = (int)$price->price;
+                    }
+                }
+                foreach ($product->qty as $qty) {
+                    if ($qty->name == $validUserCategory) {
+                        $product->qty = $qty->qty;
+                    }
+                }
+                foreach ($product->slab_price as $key => $slab_price) {
+                    if ($key == $validUserCategory) {
+                        $product->slab_price = $slab_price;
+                    }
+                }
+                return $product;
+            });
+           /* if ($request->post('sort_price') == 'high_to_low') {
+                $result = $products->sortBy('price',SORT_REGULAR,'desc');
+                $result['products'] = collect($result);
+            }else{
+                $result['products'] = $products;
+            }*/
+            $result['products'] = $products;
+            //$result['products'] = $products;
+            return response()->json(['data' => $result], $this->successStatus);
+        }
+
+    }
+
+    public function product(Request $request)
+    {
+        if ($request->post('product_id') && $request->post('user_id')) {
+            $validUserCategory = User::where('id', $request->post('user_id'))->value('user_category');
+            $products = Product::with('productImages')->where('id', $request->post('product_id'))->get();
+            $products = collect($products)->map(function ($product) use ($validUserCategory) {
+                $product->mrp = json_decode($product->mrp);
+                $product->price = json_decode($product->price);
+                $product->qty = json_decode($product->qty);
+                $product->slab_price = json_decode($product->slab_price);
+                foreach ($product->mrp as $mrp) {
+                    if ($mrp->name == $validUserCategory) {
+                        $product->mrp = $mrp->mrp;
+                    }
+                }
+                foreach ($product->price as $price) {
+                    if ($price->name == $validUserCategory) {
+                        $product->price = $price->price;
+                    }
+                }
+                foreach ($product->qty as $qty) {
+                    if ($qty->name == $validUserCategory) {
+                        $product->qty = $qty->qty;
+                    }
+                }
+                foreach ($product->slab_price as $key => $slab_price) {
+                    if ($key == $validUserCategory) {
+                        $product->slab_price = $slab_price;
+                    }
+                }
                 return $product;
             });
             $result['product'] = $products;
@@ -79,20 +166,114 @@ class ProductController extends Controller
 
     public function trending(Request $request)
     {
-        $result['trending'] = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price')->get();
-        return response()->json(['data' => $result], $this->successStatus);
+        if ($request->post('user_id')) {
+            $validUserCategory = User::where('id', $request->post('user_id'))->value('user_category');
+            $products = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price','slab_price')->get();
+            $products = collect($products)->map(function ($product) use ($validUserCategory) {
+                $product->mrp = json_decode($product->mrp);
+                $product->price = json_decode($product->price);
+                $product->qty = json_decode($product->qty);
+                $product->slab_price = json_decode($product->slab_price);
+                foreach ($product->mrp as $mrp) {
+                    if ($mrp->name == $validUserCategory) {
+                        $product->mrp = $mrp->mrp;
+                    }
+                }
+                foreach ($product->price as $price) {
+                    if ($price->name == $validUserCategory) {
+                        $product->price = $price->price;
+                    }
+                }
+                foreach ($product->qty as $qty) {
+                    if ($qty->name == $validUserCategory) {
+                        $product->qty = $qty->qty;
+                    }
+                }
+                foreach ($product->slab_price as $key => $slab_price) {
+                    if ($key == $validUserCategory) {
+                        $product->slab_price = $slab_price;
+                    }
+                }
+                return $product;
+            });
+            $result['trending'] = $products;
+            return response()->json(['data' => $result], $this->successStatus);
+        }
+
     }
 
     public function bestSelling(Request $request)
     {
-        $result['bestSelling'] = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price')->get();
-        return response()->json(['data' => $result], $this->successStatus);
+        if ($request->post('user_id')) {
+            $validUserCategory = User::where('id', $request->post('user_id'))->value('user_category');
+            $products = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price','slab_price')->get();
+            $products = collect($products)->map(function ($product) use ($validUserCategory) {
+                $product->mrp = json_decode($product->mrp);
+                $product->price = json_decode($product->price);
+                $product->qty = json_decode($product->qty);
+                $product->slab_price = json_decode($product->slab_price);
+                foreach ($product->mrp as $mrp) {
+                    if ($mrp->name == $validUserCategory) {
+                        $product->mrp = $mrp->mrp;
+                    }
+                }
+                foreach ($product->price as $price) {
+                    if ($price->name == $validUserCategory) {
+                        $product->price = $price->price;
+                    }
+                }
+                foreach ($product->qty as $qty) {
+                    if ($qty->name == $validUserCategory) {
+                        $product->qty = $qty->qty;
+                    }
+                }
+                foreach ($product->slab_price as $key => $slab_price) {
+                    if ($key == $validUserCategory) {
+                        $product->slab_price = $slab_price;
+                    }
+                }
+                return $product;
+            });
+            $result['bestSelling'] = $products;
+            return response()->json(['data' => $result], $this->successStatus);
+        }
     }
 
     public function recentView(Request $request)
     {
-        $result['recentView'] = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price')->get();
-        return response()->json(['data' => $result], $this->successStatus);
+        if ($request->post('user_id')) {
+            $validUserCategory = User::where('id', $request->post('user_id'))->value('user_category');
+            $products = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price','slab_price')->get();
+            $products = collect($products)->map(function ($product) use ($validUserCategory) {
+                $product->mrp = json_decode($product->mrp);
+                $product->price = json_decode($product->price);
+                $product->qty = json_decode($product->qty);
+                $product->slab_price = json_decode($product->slab_price);
+                foreach ($product->mrp as $mrp) {
+                    if ($mrp->name == $validUserCategory) {
+                        $product->mrp = $mrp->mrp;
+                    }
+                }
+                foreach ($product->price as $price) {
+                    if ($price->name == $validUserCategory) {
+                        $product->price = $price->price;
+                    }
+                }
+                foreach ($product->qty as $qty) {
+                    if ($qty->name == $validUserCategory) {
+                        $product->qty = $qty->qty;
+                    }
+                }
+                foreach ($product->slab_price as $key => $slab_price) {
+                    if ($key == $validUserCategory) {
+                        $product->slab_price = $slab_price;
+                    }
+                }
+                return $product;
+            });
+            $result['recentView'] = $products;
+            return response()->json(['data' => $result], $this->successStatus);
+        }
     }
 
     public function OfferCategories(Request $request)
@@ -101,7 +282,6 @@ class ProductController extends Controller
         if ($request->post('user_id')) {
             $offerCategories = OfferCategory::get();
             if (count($offerCategories) > 0) {
-
                 foreach ($offerCategories as $category) {
                     $validUser = json_decode($category->valid_user) ?? [];
                     if (in_array($request->post('user_id'), $validUser)) {
@@ -119,7 +299,7 @@ class ProductController extends Controller
 
     public function OfferCategory(Request $request)
     {
-        if ($request->post('offer_category_id')) {
+        if ($request->post('offer_category_id') && $request->post('offer_category_id')) {
             $offerCategories = OfferCategory::where('id', $request->post('offer_category_id'))->get();
             foreach ($offerCategories as $category) {
                 $prepareOffer = [];

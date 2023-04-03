@@ -60,6 +60,9 @@ class UserController extends Controller
         $category->name = $request->post('name');
         $category->user_id = json_encode($request->post('mapUser'));
         $category->save();
+        if ($request->post('mapUser')) {
+            User::whereIn('id', $request->post('mapUser'))->update(['user_category' => $request->post('name')]);
+        }
         return redirect('admin/user-categories');
     }
 
