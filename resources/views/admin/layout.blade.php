@@ -107,6 +107,15 @@
                     </li>
 
                     <li class="nav-item menu-open">
+                        <a href="{{url('admin/business_details')}}" class="nav-link @yield('business_detail_select')">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Business DetailsN
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item menu-open">
                         <a href="{{url('admin/wishlist')}}" class="nav-link @yield('wishlist_select')">
                             <i class="far fa-circle nav-icon"></i>
                             <p>

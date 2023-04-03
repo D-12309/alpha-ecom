@@ -46,16 +46,17 @@ class ProductController extends Controller
                             $product->price = (int)$price->price;
                         }
                     }
-                    foreach ($product->qty as $qty) {
+                  /*  foreach ($product->qty as $qty) {
                         if ($qty->name == $validUserCategory) {
                             $product->qty = $qty->qty;
                         }
-                    }
+                    }*/
                     foreach ($product->slab_price as $key => $slab_price) {
                         if ($key == $validUserCategory) {
                             $product->slab_price = $slab_price;
                         }
                     }
+                    $product->qty = 1;
                     $product->margin = round(($product->mrp - $product->price),2);
                     $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                     return $product;
@@ -103,16 +104,17 @@ class ProductController extends Controller
                         $product->price = (int)$price->price;
                     }
                 }
-                foreach ($product->qty as $qty) {
+                /*foreach ($product->qty as $qty) {
                     if ($qty->name == $validUserCategory) {
                         $product->qty = $qty->qty;
                     }
-                }
+                }*/
                 foreach ($product->slab_price as $key => $slab_price) {
                     if ($key == $validUserCategory) {
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->qty = 1;
                 $product->margin = round(($product->mrp - $product->price),2);
                 $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
@@ -150,11 +152,11 @@ class ProductController extends Controller
                         $product->price = $price->price;
                     }
                 }
-                foreach ($product->qty as $qty) {
+               /* foreach ($product->qty as $qty) {
                     if ($qty->name == $validUserCategory) {
                         $product->qty = $qty->qty;
                     }
-                }
+                }*/
                 foreach ($product->slab_price as $key => $slab_price) {
                     if ($key == $validUserCategory) {
                         $product->slab_price = $slab_price;
@@ -162,6 +164,7 @@ class ProductController extends Controller
                 }
                 $product->margin = round(($product->mrp - $product->price),2);
                 $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
+                $product->qty = 1;
                 return $product;
             });
             $result['product'] = $products;
@@ -190,16 +193,18 @@ class ProductController extends Controller
                         $product->price = $price->price;
                     }
                 }
-                foreach ($product->qty as $qty) {
+               /* foreach ($product->qty as $qty) {
                     if ($qty->name == $validUserCategory) {
                         $product->qty = $qty->qty;
                     }
-                }
+                }*/
                 foreach ($product->slab_price as $key => $slab_price) {
                     if ($key == $validUserCategory) {
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->qty = 1;
+                $product->margin = round(($product->mrp - $product->price),2);
                 $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
             });
@@ -229,16 +234,17 @@ class ProductController extends Controller
                         $product->price = $price->price;
                     }
                 }
-                foreach ($product->qty as $qty) {
+               /* foreach ($product->qty as $qty) {
                     if ($qty->name == $validUserCategory) {
                         $product->qty = $qty->qty;
                     }
-                }
+                }*/
                 foreach ($product->slab_price as $key => $slab_price) {
                     if ($key == $validUserCategory) {
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->qty = 1;
                 $product->margin = round(($product->mrp - $product->price),2);
                 $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
@@ -268,16 +274,17 @@ class ProductController extends Controller
                         $product->price = $price->price;
                     }
                 }
-                foreach ($product->qty as $qty) {
+                /*foreach ($product->qty as $qty) {
                     if ($qty->name == $validUserCategory) {
                         $product->qty = $qty->qty;
                     }
-                }
+                }*/
                 foreach ($product->slab_price as $key => $slab_price) {
                     if ($key == $validUserCategory) {
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->qty = 1;
                 $product->margin = round(($product->mrp - $product->price),2);
                 $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
@@ -338,16 +345,17 @@ class ProductController extends Controller
                                 $product->price = $price->price;
                             }
                         }
-                        foreach ($product->qty as $qty) {
-                            if ($qty->name == $userCategoryName) {
-                                $product->qty = $qty->qty;
-                            }
-                        }
+                            /*foreach ($product->qty as $qty) {
+                                if ($qty->name == $userCategoryName) {
+                                    $product->qty = $qty->qty;
+                                }
+                            }*/
                         foreach ($product->slab_price as $key => $slab_price) {
                             if ($key == $userCategoryName) {
                                 $product->slab_price = $slab_price;
                             }
                         }
+                        $product->qty = 1;
                         $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                         $product->margin = round(($product->mrp - $product->price),2);
                         return $product;
