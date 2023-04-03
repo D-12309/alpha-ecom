@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\TermConditionController;
 use App\Http\Controllers\Admin\PrivacyPolicyController;
+use App\Http\Controllers\Admin\WishListController;
+use App\Http\Controllers\Admin\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +34,8 @@ Route::post('admin/auth',[AdminController::class,'auth'])->name('admin.auth');
 
 Route::group( ['middleware' => ['admin_auth'],'prefix' => 'admin'], function () {
     Route::get('/users', [UserController::class, 'index']);
+    Route::get('/wishlist', [WishListController::class, 'index']);
+    Route::get('/cart', [CartController::class, 'index']);
     Route::get('/dashboard', [UserController::class, 'index']);
     Route::group( ['prefix' => 'categories'], function () {
         Route::get('/', [CategoryController::class, 'index']);

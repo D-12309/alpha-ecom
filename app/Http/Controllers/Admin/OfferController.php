@@ -127,7 +127,7 @@ class OfferController extends Controller
     public function offer_manage_category(Request $request, $id = '')
     {
 
-        $users = User::whereNotNull('name')->pluck('name','id');
+        $users = UserCategory::pluck('name','id');
         $products = Product::pluck('name','id');
         if ($id > 0) {
             $category = OfferCategory::where(['id' => $id])->first();

@@ -105,6 +105,34 @@
                             </p>
                         </a>
                     </li>
+
+                    <li class="nav-item menu-open">
+                        <a href="{{url('admin/wishlist')}}" class="nav-link @yield('wishlist_select')">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Wish Lists
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item menu-open">
+                        <a href="{{url('admin/cart')}}" class="nav-link @yield('cart_select')">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Cart
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item menu-open">
+                        <a href="{{url('admin/orders')}}" class="nav-link @yield('order_select')">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Orders
+                            </p>
+                        </a>
+                    </li>
+
                     <li class="nav-item menu-open">
                         <a href="{{url('admin/offers')}}" class="nav-link @yield('discount_select')">
                             <i class="far fa-circle nav-icon"></i>

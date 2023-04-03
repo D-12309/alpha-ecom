@@ -1,10 +1,9 @@
 @extends('admin/layout')
-@section('page_title','FAQ Page')
-@section('faq_select','active')
+@section('page_title','Cart Page')
+@section('cart_select','active')
 @section('links')
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-    <link rel="stylesheet"
-          href="{{asset('admin_assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('admin_assets/dist/css/adminlte.min.css')}}">
@@ -18,60 +17,78 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">FAQS</h1>
+                        <h1 class="m-0">Cart</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Faqs</li>
+                            <li class="breadcrumb-item active">Cart</li>
                         </ol>
                     </div><!-- /.col -->
-                    <div class="col-3 offset-9">
-                        <a href="{{url('admin/faqs/manage_faq')}}"
-                           class="btn btn-block btn-outline-primary btn-lg float-left">Add FAQ +</a>
-                    </div>
-
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
+
         <section class="content">
-            <div class="row">
-                <div class="col-12" id="accordion">
-                    @foreach($data as $key => $list)
-                        <div class="card card-primary card-outline">
-                            <a class="" data-toggle="collapse" href="#collapseOne{{$key}}"
-                               aria-expanded="true">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <h4 class="card-title w-100">{!! $list->question !!}
-                                            </h4>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <a
-                                                href="{{url('admin/faqs/manage_faq/')}}/{{$list->id}}"><i
-                                                    class="fa fa-edit"></i> <span class="text-muted"></span></a>
-                                            <a onclick="return confirm('Are you sure want to delete this record?')"
-                                               href="{{url('admin/faqs/delete/')}}/{{$list->id}}"><i
-                                                    class="fa fa-trash"></i> <span class="text-muted"></span></a>
-                                        </div>
-                                    </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
 
-
-                                </div>
-                            </a>
-                            <div id="collapseOne" class="collapse show" data-parent="#accordion{{$key}}" style="">
-                                <div class="card-body">
-                                    {!! $list->answer !!}
-                                </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Cart Details</h3>
                             </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>User Id</th>
+                                        <th>Product Id</th>
+                                        <th>SKU</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <th>Created At</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($data as $list)
+                                        <tr class="">
+                                            <td class=" ">{{$list->id}}</td>
+                                            <td class=" ">{{$list->user_id}}</td>
+                                            <td class=" ">{{$list->product_id}}</td>
+                                            <td class=" ">{{$list->sku}}</td>
+                                            <td class=" ">{{$list->qty}}</td>
+                                            <td class=" ">{{$list->price}}</td>
+                                            <td class=" ">{{\Carbon\Carbon::parse($list->created_at)->format('l jS \of F Y h:i:s A')}}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>User Id</th>
+                                        <th>Product Id</th>
+                                        <th>SKU</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <th>Created At</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-                    @endforeach
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
                 </div>
+                <!-- /.row -->
             </div>
+            <!-- /.container-fluid -->
         </section>
-
         <!-- Main content -->
         <!-- /.content -->
     </div>
