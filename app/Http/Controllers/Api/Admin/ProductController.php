@@ -56,6 +56,7 @@ class ProductController extends Controller
                             $product->slab_price = $slab_price;
                         }
                     }
+                    $product->margin = round(($product->mrp - $product->price),2);
                     $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                     return $product;
                 });
@@ -112,6 +113,7 @@ class ProductController extends Controller
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->margin = round(($product->mrp - $product->price),2);
                 $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
             });
@@ -158,6 +160,7 @@ class ProductController extends Controller
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->margin = round(($product->mrp - $product->price),2);
                 $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
             });
@@ -236,6 +239,7 @@ class ProductController extends Controller
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->margin = round(($product->mrp - $product->price),2);
                 $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
             });
@@ -274,6 +278,7 @@ class ProductController extends Controller
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->margin = round(($product->mrp - $product->price),2);
                 $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
             });
@@ -344,6 +349,7 @@ class ProductController extends Controller
                             }
                         }
                         $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
+                        $product->margin = round(($product->mrp - $product->price),2);
                         return $product;
                     });
                     $prepareOffer['valid_products'] = count($products) ? $products : [];
