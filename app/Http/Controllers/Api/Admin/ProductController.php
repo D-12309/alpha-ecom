@@ -97,18 +97,19 @@ class ProductController extends Controller
 
     public function OfferCategories(Request $request)
     {
+        $prepareOfferObj = [];
         if ($request->post('user_id')) {
             $offerCategories = OfferCategory::get();
             if (count($offerCategories) > 0) {
-                $prepareOfferObj = [];
+
                 foreach ($offerCategories as $category) {
-                    $prepareOffer = [];
                     $validUser = json_decode($category->valid_user) ?? [];
                     if (in_array($request->post('user_id'), $validUser)) {
+                        $prepareOffer = [];
                         $prepareOffer['category_name'] = $category->name;
                         $prepareOffer['category_id'] = $category->id;
+                        $prepareOfferObj[] = $prepareOffer;
                     }
-                    $prepareOfferObj[] = $prepareOffer;
                 }
             }
             $result['offerCategories'] = $prepareOfferObj;
