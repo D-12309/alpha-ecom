@@ -31,7 +31,7 @@ Route::get('categories', [ProductController::class, 'categories']);
 Route::get('category', [ProductController::class, 'category']);
 
 Route::get('offer-categories', [ProductController::class, 'OfferCategories']);
-    Route::get('offer-category', [ProductController::class, 'OfferCategory']);
+Route::get('offer-category', [ProductController::class, 'OfferCategory']);
 
 Route::get('brands', [ProductController::class, 'brands']);
 

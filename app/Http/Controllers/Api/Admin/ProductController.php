@@ -24,16 +24,16 @@ class ProductController extends Controller
 
     public function category(Request $request)
     {
-        if($request->post('category_id')){
-            $category = Category::where('id',$request->post('category_id'))->first();
-            if($category) {
+        if ($request->post('category_id')) {
+            $category = Category::where('id', $request->post('category_id'))->first();
+            if ($category) {
                 $productIds = json_decode($category->product_id);
-                $products = Product::with('productImages')->whereIn('id',$productIds)->get();
-                $products = collect($products)->map(function ($product){
-                    $product->mrp =  json_decode($product->mrp);
-                    $product->price =  json_decode($product->price);
-                    $product->qty =  json_decode($product->qty);
-                    $product->slab_price =  json_decode($product->slab_price);
+                $products = Product::with('productImages')->whereIn('id', $productIds)->get();
+                $products = collect($products)->map(function ($product) {
+                    $product->mrp = json_decode($product->mrp);
+                    $product->price = json_decode($product->price);
+                    $product->qty = json_decode($product->qty);
+                    $product->slab_price = json_decode($product->slab_price);
                     return $product;
                 });
                 $result['products'] = $products;
@@ -62,13 +62,13 @@ class ProductController extends Controller
 
     public function product(Request $request)
     {
-        if($request->post('product_id')){
-            $products = Product::with('productImages')->where('id',$request->post('product_id'))->get();
-            $products = collect($products)->map(function ($product){
-                $product->mrp =  json_decode($product->mrp);
-                $product->price =  json_decode($product->price);
-                $product->qty =  json_decode($product->qty);
-                $product->slab_price =  json_decode($product->slab_price);
+        if ($request->post('product_id')) {
+            $products = Product::with('productImages')->where('id', $request->post('product_id'))->get();
+            $products = collect($products)->map(function ($product) {
+                $product->mrp = json_decode($product->mrp);
+                $product->price = json_decode($product->price);
+                $product->qty = json_decode($product->qty);
+                $product->slab_price = json_decode($product->slab_price);
                 return $product;
             });
             $result['product'] = $products;
@@ -83,64 +83,84 @@ class ProductController extends Controller
         return response()->json(['data' => $result], $this->successStatus);
     }
 
-    public function bestSelling(Request $request) {
+    public function bestSelling(Request $request)
+    {
         $result['bestSelling'] = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price')->get();
         return response()->json(['data' => $result], $this->successStatus);
     }
 
-    public function recentView(Request $request) {
+    public function recentView(Request $request)
+    {
         $result['recentView'] = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price')->get();
         return response()->json(['data' => $result], $this->successStatus);
     }
 
-    public function OfferCategories(Request $request) {
-        $offerCategories = OfferCategory::get();
-        if(count($offerCategories) > 0) {
-            $prepareOfferObj = [];
-            foreach ($offerCategories as $category) {
-                $prepareOffer = [];
-                $validUser = json_decode($category->valid_user) ?? [];
-                $validProduct = json_decode($category->valid_product) ?? [];
-                $prepareOffer['category_name'] = $category->name;
-                $prepareOffer['category_id'] = $category->id;
-                $users = UserCategory::whereIn('id',$validUser)->get();
-                $products = Product::with('productImages')->whereIn('id',$validProduct)->get();
-                $products = collect($products)->map(function ($product){
-                    $product->mrp =  json_decode($product->mrp);
-                    $product->price =  json_decode($product->price);
-                    $product->qty =  json_decode($product->qty);
-                    $product->slab_price =  json_decode($product->slab_price);
-                    return $product;
-                });
-                $prepareOffer['valid_users'] = count($users) ? $users : [];
-                $prepareOffer['valid_products'] = count($products) ? $products : [];
-                $prepareOfferObj[] = $prepareOffer;
+    public function OfferCategories(Request $request)
+    {
+        if ($request->post('user_id')) {
+            $offerCategories = OfferCategory::get();
+            if (count($offerCategories) > 0) {
+                $prepareOfferObj = [];
+                foreach ($offerCategories as $category) {
+                    $prepareOffer = [];
+                    $validUser = json_decode($category->valid_user) ?? [];
+                    if (in_array($request->post('user_id'), $validUser)) {
+                        $prepareOffer['category_name'] = $category->name;
+                        $prepareOffer['category_id'] = $category->id;
+                    }
+                    $prepareOfferObj[] = $prepareOffer;
+                }
             }
+            $result['offerCategories'] = $prepareOfferObj;
+            return response()->json(['data' => $result], $this->successStatus);
         }
-        $result['offerCategories'] = $prepareOfferObj;
-        return response()->json(['data' => $result], $this->successStatus);
     }
 
-    public function OfferCategory(Request $request) {
-        if($request->post('offer_category_id')) {
-            $offerCategories = OfferCategory::where('id',$request->post('offer_category_id'))->get();
+    public function OfferCategory(Request $request)
+    {
+        if ($request->post('offer_category_id')) {
+            $offerCategories = OfferCategory::where('id', $request->post('offer_category_id'))->get();
             foreach ($offerCategories as $category) {
                 $prepareOffer = [];
-                $validUser = json_decode($category->valid_user) ?? [];
                 $validProduct = json_decode($category->valid_product) ?? [];
-                $prepareOffer['category_name'] = $category->name;
-                $prepareOffer['category_id'] = $category->id;
-                $users = UserCategory::whereIn('id',$validUser)->get();
-                $products = Product::with('productImages')->whereIn('id',$validProduct)->get();
-                $products = collect($products)->map(function ($product){
-                    $product->mrp =  json_decode($product->mrp);
-                    $product->price =  json_decode($product->price);
-                    $product->qty =  json_decode($product->qty);
-                    $product->slab_price =  json_decode($product->slab_price);
-                    return $product;
-                });
-                $prepareOffer['valid_products'] = count($products) ? $products : [];
-                $prepareOfferObj[] = $prepareOffer;
+                $userCategories = json_decode($category->valid_user) ?? [];
+                $userCategoryName = null;
+                foreach ($userCategories as $userCategory) {
+                    $validUserCategory = UserCategory::where('id', $userCategory)->value('name');
+                    $userCategoryName = $validUserCategory;
+                    $prepareOffer['category_name'] = $category->name;
+                    $prepareOffer['category_id'] = $category->id;
+                    $products = Product::with('productImages')->whereIn('id', $validProduct)->get();
+                    $products = collect($products)->map(function ($product) use ($userCategoryName) {
+                        $product->mrp = json_decode($product->mrp);
+                        $product->price = json_decode($product->price);
+                        $product->qty = json_decode($product->qty);
+                        $product->slab_price = json_decode($product->slab_price);
+                        foreach ($product->mrp as $mrp) {
+                            if ($mrp->name == $userCategoryName) {
+                                $product->mrp = $mrp->mrp;
+                            }
+                        }
+                        foreach ($product->price as $price) {
+                            if ($price->name == $userCategoryName) {
+                                $product->price = $price->price;
+                            }
+                        }
+                        foreach ($product->qty as $qty) {
+                            if ($qty->name == $userCategoryName) {
+                                $product->qty = $qty->qty;
+                            }
+                        }
+                        foreach ($product->slab_price as $key => $slab_price) {
+                            if ($key == $userCategoryName) {
+                                $product->slab_price = $slab_price;
+                            }
+                        }
+                        return $product;
+                    });
+                    $prepareOffer['valid_products'] = count($products) ? $products : [];
+                    $prepareOfferObj[] = $prepareOffer;
+                }
             }
             $result['products'] = $prepareOfferObj;
             return response()->json(['data' => $result], $this->successStatus);

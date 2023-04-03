@@ -41,6 +41,7 @@ class TestFunction extends Command
      */
     public function handle()
     {
+        dd(json_encode(array(1)));
         $admin = new Admin();
         $admin->email = "admin@gmail.com";
         $admin->password = Hash::make('admin@123');
