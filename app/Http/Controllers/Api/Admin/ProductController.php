@@ -56,6 +56,7 @@ class ProductController extends Controller
                             $product->slab_price = $slab_price;
                         }
                     }
+                    $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                     return $product;
                 });
                 $result['products'] = $products;
@@ -111,6 +112,7 @@ class ProductController extends Controller
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
             });
            /* if ($request->post('sort_price') == 'high_to_low') {
@@ -156,6 +158,7 @@ class ProductController extends Controller
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
             });
             $result['product'] = $products;
@@ -194,6 +197,7 @@ class ProductController extends Controller
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
             });
             $result['trending'] = $products;
@@ -232,6 +236,7 @@ class ProductController extends Controller
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
             });
             $result['bestSelling'] = $products;
@@ -269,6 +274,7 @@ class ProductController extends Controller
                         $product->slab_price = $slab_price;
                     }
                 }
+                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                 return $product;
             });
             $result['recentView'] = $products;
@@ -337,6 +343,7 @@ class ProductController extends Controller
                                 $product->slab_price = $slab_price;
                             }
                         }
+                        $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
                         return $product;
                     });
                     $prepareOffer['valid_products'] = count($products) ? $products : [];
