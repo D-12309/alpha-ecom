@@ -66,11 +66,11 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th>Engine version</th>
-                                        <th>CSS grade</th>
+                                        <th>#</th>
+                                        <th>User Name</th>
+                                        <th>Email Address</th>
+                                        <th>Contact No.</th>
+                                        <th>Pin Code</th>
                                         <th>Created At</th>
                                     </tr>
                                     </tfoot>
