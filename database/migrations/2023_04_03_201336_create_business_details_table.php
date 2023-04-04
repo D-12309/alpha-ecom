@@ -33,6 +33,8 @@ class CreateBusinessDetailsTable extends Migration
             $table->string('licence_type');
             $table->string('licence_no');
             $table->string('licence_image');
+            $table->boolean('is_approved')->default(0);
+            $table->text('rejected_message')->nullable();
             $table->timestamps();
         });
     }

@@ -3,13 +3,13 @@
 @section('business_detail_select','active')
 @section('links')
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-    <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet"
+          href="{{asset('admin_assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('admin_assets/dist/css/adminlte.min.css')}}">
 @endsection
 @section('container')
-
 
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -47,9 +47,25 @@
                                         <th>#</th>
                                         <th>Owner Name</th>
                                         <th>Shop name</th>
-                                        <th>Contact No.</th>
+                                        <th>Contact Person Name</th>
+                                        <th>Owner Image</th>
+                                        <th>Recipient Name</th>
+                                        <th>Mobile No</th>
+                                        <th>House No</th>
+                                        <th>Street</th>
+                                        <th>Locality</th>
+                                        <th>Landmark</th>
+                                        <th>City</th>
                                         <th>Pin Code</th>
+                                        <th>Id Type</th>
+                                        <th>Id No</th>
+                                        <th>Government Image</th>
+                                        <th>Licence Type</th>
+                                        <th>Licence No</th>
+                                        <th>Licence Image</th>
                                         <th>Created At</th>
+                                        <th>Action</th>
+                                        <th>Rejected Message (if Rejected)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -57,12 +73,39 @@
                                         <tr class="">
                                             <td class=" ">{{$list->id}}</td>
                                             <td class=" ">{{$list->owner_name}}</td>
-                                            <td class=" ">{{$list->shop_name}}</td>
+                                            <td class=" ">{{$list->contact_person_name}}</td>
+                                            <td class=" ">{{$list->owner_image}}</td>
+                                            <td class=" ">{{$list->recipient_name}}</td>
                                             <td class=" ">{{$list->mobile_no}}</td>
+                                            <td class=" ">{{$list->house_no}}</td>
+                                            <td class=" ">{{$list->street}}</td>
+                                            <td class=" ">{{$list->locality}}</td>
+                                            <td class=" ">{{$list->landmark}}</td>
+                                            <td class=" ">{{$list->city}}</td>
+                                            <td class=" ">{{$list->pin_code}}</td>
+                                            <td class=" ">{{$list->id_type}}</td>
+                                            <td class=" ">{{$list->id_no}}</td>
+                                            <td class=" ">{{$list->government_image}}</td>
+                                            <td class=" ">{{$list->licence_type}}</td>
+                                            <td class=" ">{{$list->licence_no}}</td>
+                                            <td class=" ">{{$list->licence_image}}</td>
                                             <td class=" ">{{\Carbon\Carbon::parse($list->created_at)->format('l jS \of F Y h:i:s A')}}</td>
-                                            <td class=" last"> <a
-                                                    href="{{url('admin/business-details/manage-business-detail/')}}/{{$list->id}}"><i
-                                                        class="fa fa-edit"></i> <span class="text-muted"></span></a>
+
+                                            <td class=" last"><a
+                                                    href="{{url('admin/business-details/approved')}}/{{$list->id}}">Approved</a>
+                                            </td>
+                                            <td class=" ">
+                                                <form class="form-horizontal" method="post"
+                                                      action="{{route('rejected.rejected_message')}}">
+                                                    @csrf
+                                                    <div class="col-sm-10">
+                                                        <input type="hidden" name="id" value="{{$list->id}}">
+                                                        <input type="text" class="form-control" id="inputEmail3"
+                                                               name="rejectedMessage"
+                                                               value="{{$rejected_message ? $rejected_message  : old('rejected_message')}}" required>
+                                                        <button type="submit" class="btn btn-info">Rejected</button>
+                                                    </div>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -72,9 +115,24 @@
                                         <th>#</th>
                                         <th>Owner Name</th>
                                         <th>Shop name</th>
-                                        <th>Contact No.</th>
+                                        <th>Contact Person Name</th>
+                                        <th>Owner Image</th>
+                                        <th>Recipient Name</th>
+                                        <th>Mobile No</th>
+                                        <th>House No</th>
+                                        <th>Street</th>
+                                        <th>Locality</th>
+                                        <th>Landmark</th>
+                                        <th>City</th>
                                         <th>Pin Code</th>
+                                        <th>Id Type</th>
+                                        <th>Id No</th>
+                                        <th>Government Image</th>
+                                        <th>Licence Type</th>
+                                        <th>Licence No</th>
+                                        <th>Licence Image</th>
                                         <th>Created At</th>
+                                        <th>Rejected Message (if Rejected)</th>
                                     </tr>
                                     </tfoot>
                                 </table>

@@ -3,19 +3,21 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\BusinessDetails;
 use App\Models\User;
 use App\Models\UserCategory;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function __construct() {
-         $this->perPage = env('PER_PAGE_RECORD') ?? 1;
+    public function __construct()
+    {
+        $this->perPage = env('PER_PAGE_RECORD') ?? 1;
     }
 
     public function index(Request $request)
     {
-        $user['data'] = User::orderby('id','desc')->get();
+        $user['data'] = User::orderby('id', 'desc')->get();
         return view('admin/user', $user);
     }
 
@@ -28,7 +30,7 @@ class UserController extends Controller
     public function user_manage_category(Request $request, $id = '')
     {
 
-        $users = User::whereNotNull('name')->pluck('name','id');
+        $users = User::whereNotNull('name')->pluck('name', 'id');
         if ($id > 0) {
             $category = UserCategory::where(['id' => $id])->first();
             $result['name'] = $category->name;
@@ -70,5 +72,27 @@ class UserController extends Controller
     {
         $category = UserCategory::where('id', $id)->delete();
         return redirect('admin/user-categories');
+    }
+
+    public function business_details(Request $request)
+    {
+        $user['data'] = BusinessDetails::orderby('id', 'desc')->get();
+        return view('admin/business_detail', $user);
+    }
+
+    public function approved(Request $request, $id)
+    {
+        if ($id) {
+            BusinessDetails::where('id', $id)->update(['is_approved' => 1]);
+            return redirect('admin/business-details');
+        }
+    }
+
+    public function rejected(Request $request)
+    {
+        if ($request->post('id') && $request->post('rejected_message')) {
+            BusinessDetails::where('id', $request->post('id'))->update(['rejected_message' => $request->post('rejected_message')]);
+            return redirect('admin/business-details');
+        }
     }
 }

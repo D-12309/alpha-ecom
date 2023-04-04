@@ -35,7 +35,8 @@ Route::post('admin/auth',[AdminController::class,'auth'])->name('admin.auth');
 Route::group( ['middleware' => ['admin_auth'],'prefix' => 'admin'], function () {
     Route::get('/users', [UserController::class, 'index']);
     Route::group( ['prefix' => 'business-details'], function () {
-//        Route::get('/', [::class, 'index']);
+        Route::get('/', [UserController::class, 'business_details']);
+        Route::get('/approved/{id}', [UserController::class, 'approved']);
     });
     Route::get('/wishlist', [WishListController::class, 'index']);
     Route::get('/cart', [CartController::class, 'index']);
