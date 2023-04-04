@@ -33,7 +33,7 @@ class FAQController extends Controller
 
     public function business_detail(Request $request)
     {
-        $request->validate([
+        $rules = [
             'owner_name' => 'required',
             'shop_name' => 'required',
             'contact_person_name' => 'required',
@@ -52,7 +52,14 @@ class FAQController extends Controller
             'licence_type' => 'required',
             'licence_no' => 'required',
             'licence_image' => 'required',
-        ]);
+        ];
+        $validation = validator(
+            $request->toArray(),
+            $rules
+        );
+        if ($validation->fails()) {
+            return response()->json($validation->messages(), 400);
+        }
         if ($request->post('business_detail_id')) {
             $businessDetail = BusinessDetails::find($request->post('business_detail_id'));
         } else {

@@ -230,9 +230,6 @@
                                 <input type="hidden" name="id" value="{{$id}}"/>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <button type="submit" name="approved" class="btn btn-info">Approved</button>
-                                    <button type="submit" name="rejected" class="btn btn-info">Rejected</button>
-                                    <a href="{{url('admin/brands')}}"class="btn btn-default float-right">Cancel</a>
                                 </div>
                                 <!-- /.card-footer -->
                             </form>

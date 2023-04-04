@@ -76,8 +76,19 @@ class UserController extends Controller
 
     public function business_details(Request $request)
     {
-        $user['data'] = BusinessDetails::orderby('id', 'desc')->get();
+        $user['data'] = BusinessDetails::where('is_rejected',0)->orderby('id', 'desc')->get();
         return view('admin/business_detail', $user);
+    }
+
+    public function rejected_details(Request $request)
+    {
+        $user['data'] = BusinessDetails::where('is_rejected',1)->orderby('id', 'desc')->get();
+        return view('admin/rejected_detail', $user);
+    }
+
+    public function manage_business_detail(Request $request,$id) {
+        $user = BusinessDetails::where('id',$id)->first();
+        return view('admin/manage_business_detail', $user);
     }
 
     public function approved(Request $request, $id)
@@ -91,7 +102,7 @@ class UserController extends Controller
     public function rejected(Request $request)
     {
         if ($request->post('id') && $request->post('rejected_message')) {
-            BusinessDetails::where('id', $request->post('id'))->update(['rejected_message' => $request->post('rejected_message')]);
+            BusinessDetails::where('id', $request->post('id'))->update(['rejected_message' => $request->post('rejected_message'),'is_rejected' => 1]);
             return redirect('admin/business-details');
         }
     }

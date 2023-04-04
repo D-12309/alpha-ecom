@@ -107,10 +107,17 @@
                     </li>
 
                     <li class="nav-item menu-open">
-                        <a href="{{url('admin/business_details')}}" class="nav-link @yield('business_detail_select')">
+                        <a href="{{url('admin/business-details')}}" class="nav-link @yield('business_detail_select')">
                             <i class="far fa-circle nav-icon"></i>
                             <p>
                                 Pending Details
+                            </p>
+                        </a>
+                    </li><li class="nav-item menu-open">
+                        <a href="{{url('admin/business-details/rejected-detail')}}" class="nav-link @yield('rejected_detail_select')">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Rejected Details
                             </p>
                         </a>
                     </li>

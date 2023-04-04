@@ -1,6 +1,6 @@
 @extends('admin/layout')
-@section('page_title','Business Detail Page')
-@section('business_detail_select','active')
+@section('page_title','Rejected Detail Page')
+@section('rejected_detail_select','active')
 @section('links')
     <link rel="stylesheet" href="{{asset('admin_assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet"
@@ -67,15 +67,10 @@
                                             <td class=" ">{{$list->recipient_name}}</td>
                                             <td class=" ">{{$list->mobile_no}}</td>
                                             <td class=" ">{{\Carbon\Carbon::parse($list->created_at)->format('l jS \of F Y h:i:s A')}}</td>
-                                            @if (!$list->is_approved)
-                                            <td class=" last"><a class="btn btn-success"
-                                                    href="{{url('admin/business-details/approved')}}/{{$list->id}}">Approve</a><a class="mt-2"
-                                                    href="{{url('admin/business-details/')}}/{{$list->id}}">view <span class="text-muted"></span></a>
+                                            <td class=" last"><a class="mt-2"
+                                                                 href="{{url('admin/business-details/')}}/{{$list->id}}">view
+                                                    <span class="text-muted"></span></a>
                                             </td>
-                                            @else
-                                                <td class=" last">Approved
-                                                </td>
-                                                @endif
                                             <td class="col-md-12">
                                                 <form class="form-horizontal" method="post"
                                                       action="{{route('rejected.rejected_message')}}">
@@ -84,9 +79,11 @@
                                                     <div class="col-md-12">
                                                         <input type="hidden" name="id" value="{{$list->id}}">
                                                         <textarea type="text" class="form-control" id="inputEmail3"
-                                                                  name="rejected_message" required placeholder="rejection message ...">{{$list->rejected_message ?? ''}}</textarea>
+                                                                  name="rejected_message" required
+                                                                  placeholder="rejection message ...">{{$list->rejected_message ?? ''}}</textarea>
                                                         @if (!$list->is_rejected)
-                                                        <button type="submit" class="btn btn-danger mt-2">Rejected</button>
+                                                            <button type="submit" class="btn btn-danger mt-2">Rejected
+                                                            </button>
                                                         @else
                                                             Rejected
                                                         @endif
