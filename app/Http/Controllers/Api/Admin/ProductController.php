@@ -46,19 +46,19 @@ class ProductController extends Controller
                             $product->price = (int)$price->price;
                         }
                     }
-                  /*  foreach ($product->qty as $qty) {
-                        if ($qty->name == $validUserCategory) {
-                            $product->qty = $qty->qty;
-                        }
-                    }*/
+                    /*  foreach ($product->qty as $qty) {
+                          if ($qty->name == $validUserCategory) {
+                              $product->qty = $qty->qty;
+                          }
+                      }*/
                     foreach ($product->slab_price as $key => $slab_price) {
                         if ($key == $validUserCategory) {
                             $product->slab_price = $slab_price;
                         }
                     }
                     $product->qty = 1;
-                    $product->margin = round(($product->mrp - $product->price),2);
-                    $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
+                    $product->margin = round(($product->mrp - $product->price), 2);
+                    $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01), 2) . "%";
                     return $product;
                 });
                 $result['products'] = $products;
@@ -115,16 +115,16 @@ class ProductController extends Controller
                     }
                 }
                 $product->qty = 1;
-                $product->margin = round(($product->mrp - $product->price),2);
-                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
+                $product->margin = round(($product->mrp - $product->price), 2);
+                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01), 2) . "%";
                 return $product;
             });
-           /* if ($request->post('sort_price') == 'high_to_low') {
-                $result = $products->sortBy('price',SORT_REGULAR,'desc');
-                $result['products'] = collect($result);
-            }else{
-                $result['products'] = $products;
-            }*/
+            /* if ($request->post('sort_price') == 'high_to_low') {
+                 $result = $products->sortBy('price',SORT_REGULAR,'desc');
+                 $result['products'] = collect($result);
+             }else{
+                 $result['products'] = $products;
+             }*/
             $result['products'] = $products;
             //$result['products'] = $products;
             return response()->json(['data' => $result], $this->successStatus);
@@ -152,18 +152,18 @@ class ProductController extends Controller
                         $product->price = $price->price;
                     }
                 }
-               /* foreach ($product->qty as $qty) {
-                    if ($qty->name == $validUserCategory) {
-                        $product->qty = $qty->qty;
-                    }
-                }*/
+                /* foreach ($product->qty as $qty) {
+                     if ($qty->name == $validUserCategory) {
+                         $product->qty = $qty->qty;
+                     }
+                 }*/
                 foreach ($product->slab_price as $key => $slab_price) {
                     if ($key == $validUserCategory) {
                         $product->slab_price = $slab_price;
                     }
                 }
-                $product->margin = round(($product->mrp - $product->price),2);
-                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
+                $product->margin = round(($product->mrp - $product->price), 2);
+                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01), 2) . "%";
                 $product->qty = 1;
                 return $product;
             });
@@ -177,7 +177,7 @@ class ProductController extends Controller
     {
         if ($request->post('user_id')) {
             $validUserCategory = User::where('id', $request->post('user_id'))->value('user_category');
-            $products = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price','slab_price')->get();
+            $products = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price', 'slab_price')->get();
             $products = collect($products)->map(function ($product) use ($validUserCategory) {
                 $product->mrp = json_decode($product->mrp);
                 $product->price = json_decode($product->price);
@@ -193,19 +193,19 @@ class ProductController extends Controller
                         $product->price = $price->price;
                     }
                 }
-               /* foreach ($product->qty as $qty) {
-                    if ($qty->name == $validUserCategory) {
-                        $product->qty = $qty->qty;
-                    }
-                }*/
+                /* foreach ($product->qty as $qty) {
+                     if ($qty->name == $validUserCategory) {
+                         $product->qty = $qty->qty;
+                     }
+                 }*/
                 foreach ($product->slab_price as $key => $slab_price) {
                     if ($key == $validUserCategory) {
                         $product->slab_price = $slab_price;
                     }
                 }
                 $product->qty = 1;
-                $product->margin = round(($product->mrp - $product->price),2);
-                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
+                $product->margin = round(($product->mrp - $product->price), 2);
+                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01), 2) . "%";
                 return $product;
             });
             $result['trending'] = $products;
@@ -218,7 +218,7 @@ class ProductController extends Controller
     {
         if ($request->post('user_id')) {
             $validUserCategory = User::where('id', $request->post('user_id'))->value('user_category');
-            $products = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price','slab_price')->get();
+            $products = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price', 'slab_price')->get();
             $products = collect($products)->map(function ($product) use ($validUserCategory) {
                 $product->mrp = json_decode($product->mrp);
                 $product->price = json_decode($product->price);
@@ -234,19 +234,19 @@ class ProductController extends Controller
                         $product->price = $price->price;
                     }
                 }
-               /* foreach ($product->qty as $qty) {
-                    if ($qty->name == $validUserCategory) {
-                        $product->qty = $qty->qty;
-                    }
-                }*/
+                /* foreach ($product->qty as $qty) {
+                     if ($qty->name == $validUserCategory) {
+                         $product->qty = $qty->qty;
+                     }
+                 }*/
                 foreach ($product->slab_price as $key => $slab_price) {
                     if ($key == $validUserCategory) {
                         $product->slab_price = $slab_price;
                     }
                 }
                 $product->qty = 1;
-                $product->margin = round(($product->mrp - $product->price),2);
-                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
+                $product->margin = round(($product->mrp - $product->price), 2);
+                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01), 2) . "%";
                 return $product;
             });
             $result['bestSelling'] = $products;
@@ -258,7 +258,7 @@ class ProductController extends Controller
     {
         if ($request->post('user_id')) {
             $validUserCategory = User::where('id', $request->post('user_id'))->value('user_category');
-            $products = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price','slab_price')->get();
+            $products = Product::with(['productImages'])->select('id', 'name', 'qty', 'sku', 'mrp', 'price', 'slab_price')->get();
             $products = collect($products)->map(function ($product) use ($validUserCategory) {
                 $product->mrp = json_decode($product->mrp);
                 $product->price = json_decode($product->price);
@@ -285,8 +285,8 @@ class ProductController extends Controller
                     }
                 }
                 $product->qty = 1;
-                $product->margin = round(($product->mrp - $product->price),2);
-                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
+                $product->margin = round(($product->mrp - $product->price), 2);
+                $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01), 2) . "%";
                 return $product;
             });
             $result['recentView'] = $products;
@@ -329,8 +329,21 @@ class ProductController extends Controller
                     $userCategoryName = $validUserCategory;
                     $prepareOffer['category_name'] = $category->name;
                     $prepareOffer['category_id'] = $category->id;
+
                     $products = Product::with('productImages')->whereIn('id', $validProduct)->get();
                     $products = collect($products)->map(function ($product) use ($userCategoryName) {
+                        $discounts = Offer::get();
+                        foreach ($discounts as $discount) {
+                            $validDisPro = json_decode($discount->valid_product);
+                            $offerObj = [];
+                            if(is_array($validDisPro) && in_array($product->id,$validDisPro)) {
+                                $offer  = [];
+                                $offer['name'] = $discount->name;
+                                $offer['value'] = $discount->value;
+                                $offerObj[] = $offer;
+                            }
+                    }
+                        $product->offer = $offerObj;
                         $product->mrp = json_decode($product->mrp);
                         $product->price = json_decode($product->price);
                         $product->qty = json_decode($product->qty);
@@ -345,19 +358,19 @@ class ProductController extends Controller
                                 $product->price = $price->price;
                             }
                         }
-                            /*foreach ($product->qty as $qty) {
-                                if ($qty->name == $userCategoryName) {
-                                    $product->qty = $qty->qty;
-                                }
-                            }*/
+                        /*foreach ($product->qty as $qty) {
+                            if ($qty->name == $userCategoryName) {
+                                $product->qty = $qty->qty;
+                            }
+                        }*/
                         foreach ($product->slab_price as $key => $slab_price) {
                             if ($key == $userCategoryName) {
                                 $product->slab_price = $slab_price;
                             }
                         }
                         $product->qty = 1;
-                        $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01),2) . "%";
-                        $product->margin = round(($product->mrp - $product->price),2);
+                        $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01), 2) . "%";
+                        $product->margin = round(($product->mrp - $product->price), 2);
                         return $product;
                     });
                     $prepareOffer['valid_products'] = count($products) ? $products : [];

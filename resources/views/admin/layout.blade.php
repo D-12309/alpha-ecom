@@ -110,7 +110,7 @@
                         <a href="{{url('admin/business_details')}}" class="nav-link @yield('business_detail_select')">
                             <i class="far fa-circle nav-icon"></i>
                             <p>
-                                Business DetailsN
+                                Business Details
                             </p>
                         </a>
                     </li>

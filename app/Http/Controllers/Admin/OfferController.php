@@ -30,7 +30,7 @@ class OfferController extends Controller
     {
 
         $products = Product::pluck('name', 'id');
-        $user = User::whereNotNull('name')->get();
+        $user = User::whereNotNull('name')->pluck('name','id');
         if ($id > 0) {
             $offer = Offer::where(['id' => $id])->first();
             $result['name'] = $offer->name;
@@ -55,7 +55,7 @@ class OfferController extends Controller
             $result['end_date'] = "";
             $result['min_amount'] = "";
             $result['min_qty'] = "";
-            $result['mapUser'] = [];
+            $result['mapUsers'] = [];
             $result['users'] = $user;
             $result['products'] = $products;
             $result['mapProducts'] = [];
