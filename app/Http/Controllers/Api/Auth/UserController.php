@@ -20,8 +20,10 @@ class UserController extends Controller
             $user = User::where('contact_no',$request->post('contact_no'))->first();
             if($user) {
                 $user->type = 'old';
+                $user->type = 'old';
                 $user->save();
-                return response()->json(['message' => 'Your mobile number already exits','otp' => '1111','type' => $user->type], $this-> successStatus);
+                return response()->json(['message' => 'Your mobile number already exits','otp' => '1111','type' => $user->type,'user_name' => $user->name,"user_id" =>$user
+                ->id], $this-> successStatus);
             }else{
                 $validator = Validator::make($request->all(), [
                     'contact_no' => 'required|numeric|digits:10',
@@ -34,7 +36,7 @@ class UserController extends Controller
                 $user->contact_no = $request->post('contact_no');
                 $user->type = 'new';
                 $user->save();
-                return response()->json(['message' => 'Successfully Login','otp' => '1111','type' => $user->type], $this-> successStatus);
+                return response()->json(['message' => 'Successfully Login','otp' => '1111','type' => $user->type,"user_id" => "","user_name" => ""], $this-> successStatus);
             }
         }
         else{
