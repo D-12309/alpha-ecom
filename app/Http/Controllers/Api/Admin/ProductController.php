@@ -302,7 +302,7 @@ class ProductController extends Controller
             if (count($offerCategories) > 0) {
                 foreach ($offerCategories as $category) {
                     $validUser = json_decode($category->valid_user) ?? [];
-                    if (in_array($request->post('user_id'), $validUser)) {
+                    if (is_array($validUser) && in_array($request->post('user_id'), $validUser)) {
                         $prepareOffer = [];
                         $prepareOffer['category_name'] = $category->name;
                         $prepareOffer['category_id'] = $category->id;
@@ -317,64 +317,66 @@ class ProductController extends Controller
 
     public function OfferCategory(Request $request)
     {
-        if ($request->post('offer_category_id') && $request->post('offer_category_id')) {
+        $prepareOfferObj = [];
+        if ($request->post('offer_category_id') && $request->post('user_id')) {
             $offerCategories = OfferCategory::where('id', $request->post('offer_category_id'))->get();
             foreach ($offerCategories as $category) {
                 $prepareOffer = [];
                 $validProduct = json_decode($category->valid_product) ?? [];
                 $userCategories = json_decode($category->valid_user) ?? [];
                 $userCategoryName = null;
-                foreach ($userCategories as $userCategory) {
-                    $validUserCategory = UserCategory::where('id', $userCategory)->value('name');
-                    $userCategoryName = $validUserCategory;
-                    $prepareOffer['category_name'] = $category->name;
-                    $prepareOffer['category_id'] = $category->id;
-
-                    $products = Product::with('productImages')->whereIn('id', $validProduct)->get();
-                    $products = collect($products)->map(function ($product) use ($userCategoryName) {
-                        $discounts = Offer::get();
-                        foreach ($discounts as $discount) {
-                            $validDisPro = json_decode($discount->valid_product);
-                            $offerObj = [];
-                            if(is_array($validDisPro) && in_array($product->id,$validDisPro)) {
-                                $offer  = [];
-                                $offer['name'] = $discount->name;
-                                $offer['value'] = $discount->value;
-                                $offerObj[] = $offer;
+                if (is_array($userCategories)) {
+                    foreach ($userCategories as $userCategory) {
+                        $validUserCategory = UserCategory::where('id', $userCategory)->value('name');
+                        $userCategoryName = $validUserCategory;
+                        $prepareOffer['category_name'] = $category->name;
+                        $prepareOffer['category_id'] = $category->id;
+                        $products = Product::with('productImages')->whereIn('id', $validProduct)->get();
+                        $products = collect($products)->map(function ($product) use ($userCategoryName) {
+                            $discounts = Offer::get();
+                            foreach ($discounts as $discount) {
+                                $validDisPro = json_decode($discount->valid_product);
+                                $offerObj = [];
+                                if (is_array($validDisPro) && in_array($product->id, $validDisPro)) {
+                                    $offer = [];
+                                    $offer['name'] = $discount->name;
+                                    $offer['value'] = $discount->value;
+                                    $offerObj[] = $offer;
+                                }
                             }
+                            $product->offer = $offerObj;
+                            $product->mrp = json_decode($product->mrp);
+                            $product->price = json_decode($product->price);
+                            $product->qty = json_decode($product->qty);
+                            $product->slab_price = json_decode($product->slab_price);
+                            foreach ($product->mrp as $mrp) {
+                                if ($mrp->name == $userCategoryName) {
+                                    $product->mrp = $mrp->mrp;
+                                }
+                            }
+                            foreach ($product->price as $price) {
+                                if ($price->name == $userCategoryName) {
+                                    $product->price = $price->price;
+                                }
+                            }
+                            /*foreach ($product->qty as $qty) {
+                                if ($qty->name == $userCategoryName) {
+                                    $product->qty = $qty->qty;
+                                }
+                            }*/
+                            foreach ($product->slab_price as $key => $slab_price) {
+                                if ($key == $userCategoryName) {
+                                    $product->slab_price = $slab_price;
+                                }
+                            }
+                            $product->qty = 1;
+                            $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01), 2) . "%";
+                            $product->margin = round(($product->mrp - $product->price), 2);
+                            return $product;
+                        });
+                        $prepareOffer['valid_products'] = count($products) ? $products : [];
+                        $prepareOfferObj[] = $prepareOffer;
                     }
-                        $product->offer = $offerObj;
-                        $product->mrp = json_decode($product->mrp);
-                        $product->price = json_decode($product->price);
-                        $product->qty = json_decode($product->qty);
-                        $product->slab_price = json_decode($product->slab_price);
-                        foreach ($product->mrp as $mrp) {
-                            if ($mrp->name == $userCategoryName) {
-                                $product->mrp = $mrp->mrp;
-                            }
-                        }
-                        foreach ($product->price as $price) {
-                            if ($price->name == $userCategoryName) {
-                                $product->price = $price->price;
-                            }
-                        }
-                        /*foreach ($product->qty as $qty) {
-                            if ($qty->name == $userCategoryName) {
-                                $product->qty = $qty->qty;
-                            }
-                        }*/
-                        foreach ($product->slab_price as $key => $slab_price) {
-                            if ($key == $userCategoryName) {
-                                $product->slab_price = $slab_price;
-                            }
-                        }
-                        $product->qty = 1;
-                        $product->discount = round(($product->mrp - $product->price) / ($product->mrp * 0.01), 2) . "%";
-                        $product->margin = round(($product->mrp - $product->price), 2);
-                        return $product;
-                    });
-                    $prepareOffer['valid_products'] = count($products) ? $products : [];
-                    $prepareOfferObj[] = $prepareOffer;
                 }
             }
             $result['products'] = $prepareOfferObj;
