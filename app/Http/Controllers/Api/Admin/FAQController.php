@@ -7,6 +7,7 @@ use App\Models\BusinessDetails;
 use App\Models\Faq;
 use App\Models\PrivacyPolicy;
 use App\Models\TermCondition;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FAQController extends Controller
@@ -22,6 +23,12 @@ class FAQController extends Controller
     public function privacyPolicy(Request $request)
     {
         $result['privacyPolicy'] = PrivacyPolicy::first();
+        return response()->json(['data' => $result], $this->successStatus);
+    }
+
+    public function user(Request $request)
+    {
+        $result['user'] = User::find($request->user_id);
         return response()->json(['data' => $result], $this->successStatus);
     }
 
@@ -52,6 +59,7 @@ class FAQController extends Controller
             'licence_type' => 'required',
             'licence_no' => 'required',
             'licence_image' => 'required',
+            'user_id' => 'required'
         ];
         $validation = validator(
             $request->toArray(),
@@ -83,6 +91,7 @@ class FAQController extends Controller
         $businessDetail->licence_type = $request->post('licence_type');
         $businessDetail->licence_no = $request->post('licence_no');
         $businessDetail->licence_image = $request->post('licence_image');
+        $businessDetail->user_id = $request->post('user_id');
         $businessDetail->save();
 
         return response()->json(['id' => $businessDetail->id, 'message' => 'Business Detail Saved Successfully'], $this->successStatus);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\BusinessDetails;
+use App\Models\Offer;
 use App\Models\User;
 use App\Models\UserCategory;
 use Illuminate\Http\Request;
@@ -50,6 +51,23 @@ class UserController extends Controller
 
     public function manage_user_category_process(Request $request)
     {
+        if ( $request->post('business_detail')) {
+            $category = UserCategory::find($request->post('mapUserCategory'));
+            if ($category) {
+                $user = json_decode($category->user_id);
+                if(is_array($user)){
+                    array_push($user,$request->post('user_id'));
+                    $category->user_id = json_encode($user);
+                }else{
+                    $user = array($request->post('user_id'));
+                    $category->user_id =json_encode($user);
+                }
+                User::where('id',$request->post('user_id'))->update(['user_category' => $category->name]);
+                BusinessDetails::where('user_id',$request->post('user_id'))->update(['user_category' => $category->name]);
+                $category->save();
+                return redirect('admin/business-details');
+            }
+        }
         $request->validate([
             'name' => 'required|unique:user_categories,name,' . $request->post('id')
         ]);
@@ -76,8 +94,11 @@ class UserController extends Controller
 
     public function business_details(Request $request)
     {
-        $user['data'] = BusinessDetails::where('is_rejected',0)->orderby('id', 'desc')->get();
-        return view('admin/business_detail', $user);
+        $result['data'] = BusinessDetails::where('is_rejected',0)->orderby('id', 'desc')->get();
+        $user = UserCategory::whereNotNull('name')->pluck('name','id');
+        $result['users'] = $user;
+        $result['mapUsers'] = [];
+        return view('admin/business_detail', $result);
     }
 
     public function rejected_details(Request $request)

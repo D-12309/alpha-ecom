@@ -36,6 +36,8 @@ class CreateBusinessDetailsTable extends Migration
             $table->boolean('is_approved')->default(0);
             $table->boolean('is_rejected')->default(0);
             $table->text('rejected_message')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->string('user_category')->nullable();
             $table->timestamps();
         });
     }

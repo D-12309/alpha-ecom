@@ -36,6 +36,7 @@ Route::group( ['middleware' => ['admin_auth'],'prefix' => 'admin'], function () 
     Route::get('/users', [UserController::class, 'index']);
     Route::group( ['prefix' => 'business-details'], function () {
         Route::get('/', [UserController::class, 'business_details']);
+
         Route::get('/rejected-detail', [UserController::class, 'rejected_details']);
         Route::get('/{id}', [UserController::class, 'manage_business_detail']);
         Route::get('/approved/{id}', [UserController::class, 'approved']);

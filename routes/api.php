@@ -43,5 +43,6 @@ Route::get('faqs', [FAQController::class, 'faqs']);
 Route::get('privacy-policy', [FAQController::class, 'privacyPolicy']);
 Route::get('Terms-and-condition', [FAQController::class, 'termCondition']);
 Route::post('business-detail', [FAQController::class, 'business_detail']);
+Route::get('user', [FAQController::class, 'user']);
 
 

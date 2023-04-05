@@ -82,7 +82,7 @@
 
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Map User</label>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Map User Category</label>
                                         <div class="col-sm-10">
                                             <select class="select2" multiple="multiple" name="mapUser[]"
                                                     data-placeholder="Select a User" style="width: 100%;">
